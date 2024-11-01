@@ -35,6 +35,7 @@ def listar_categorias(request: Request):
     
     return categorias
 
+
 @router_categoria.get('/una/{categoria_id}')#?categoria_id=3
 def buscar_categoria_por_id(request: Request, categoria_id: int):
     
