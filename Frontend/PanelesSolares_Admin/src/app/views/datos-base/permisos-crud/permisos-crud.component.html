@@ -1,0 +1,433 @@
+<div class="contenedor-productos">
+  <div class="filtro-agregar">
+    <button *ngIf="permisos.w" class="btn btn-agregar" (click)="accionesClick('', 1, agregar)">
+      <i class="cil-plus"></i>
+    </button>
+    <input
+      type="text"
+      class="filtro"
+      placeholder="Filtrar..."
+      (keyup)="updateFilter($event)"
+    />
+  </div>
+  <ngx-datatable
+    #mydatatable
+    class="material striped"
+    [headerHeight]="50"
+    [limit]="5"
+    [externalSorting]="true"
+    [virtualization]="true"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [rows]="permisos_CRUD"
+    [columns]="columns"
+    [columnMode]="ColumnMode.flex"
+    *ngIf="permisos.r"
+  >
+    <ngx-datatable-column prop="id" name="Id" [flexGrow]="0.5"
+      ><!-- Me gusta más esta forma -->
+      <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+      >
+        <span>{{ value }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="r" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Leer</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="w" [flexGrow]="1">
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Escribir</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="u" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Actualizar</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="d" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Borrar</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="rol" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Rol</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="modulo_id" name="Módulo" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+      >
+        <span>{{ getModuloNombre(value) }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="acciones" name="Acciones" [flexGrow]="2">
+      <ng-template
+        let-value="value"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+      <div 
+        class="div-botones"
+        *ngIf="permisos.u || permisos.d || permisos.r"
+        >
+        <ng-container *ngFor="let item of botones">
+        <button
+            class="me-1 btn g-botones-acciones"
+            (click)="accionesClick('Descripcion', rowIndex, item.nombre)"
+            *appPermissions="{modulo: 'permisos', permiso: item.permiso}"
+        >
+            <i
+            [ngClass]="{
+                'cil-book': item.nombre === 'Leer',
+                'cil-trash': item.nombre === 'Borrar',
+                'cil-pencil': item.nombre === 'Actualizar'
+            }"
+            ></i>
+        </button>
+        </ng-container>
+      </div>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+  <!-- ACCIONES  -->
+  <div
+    [class]="{
+      contenedor: l || a || b,
+      none: ((l === a) === b) === false
+    }"
+  >
+    <!-- LEER -->
+    <div
+      *ngIf="l"
+      [class]="{
+        contenedor_model: l
+      }"
+    >
+      <div class="form-model">
+        <div class="etiqueta-accion">
+          <h3 style="color: aliceblue">
+            {{ titulo_model }}
+          </h3>
+          <button class="boton_cerrar" type="button" (click)="l = false">
+            X
+          </button>
+        </div>
+        <div class="form-servicio">
+          <table class="tabla-leer-productos">
+            <tbody>
+              <tr>
+                <td>ID:</td>
+                <td id="celId">{{ id }}</td>
+              </tr>
+              <tr>
+                <td>Nombre:</td>
+                <td id="celNombre">{{ modulo_id_acciones }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pie-pagina-model">
+          <button
+            class="btn-cerrar"
+            type="button"
+            data-dismiss="modal"
+            (click)="l = false"
+          >
+            <i class="cil-x" aria-hidden="true"></i>
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Actualizar -->
+    <div
+      *ngIf="a"
+      [class]="{
+        contenedor_model: a
+      }"
+    >
+      <div class="form-model">
+        <div class="etiqueta-accion">
+          <h3 style="color: aliceblue">
+            {{ titulo_model }}
+          </h3>
+          <button class="boton_cerrar" type="button" (click)="a = false">
+            X
+          </button>
+        </div>
+        <form
+          method="post"
+          class="form-servicio"
+          [formGroup]="formulario"
+          (ngSubmit)="updateServicioTipo()"
+        >
+          <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+          </p>
+          <div class="entradas-productos">
+            <div class="entradas-txt-productos">
+              <div class="grupo-form">
+                <div class="entrada-txt-nom">
+                  <label class="etiqueta-entrada-form"
+                    >Módulo <span style="color: red">*</span></label
+                  >
+                  <select
+                    class="entrada-form"
+                    name="tipo-servicio"
+                    id="tipo-servicio"
+                    formControlName="modulo_id"
+                  >
+                    <option *ngFor="let tipo of modulo_id" [ngValue]="tipo.id">
+                      {{ tipo.nombre }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="grupo-form">
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Leer <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="r"
+                  />
+                </div>
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Escribir <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="w"
+                  />
+                </div>
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Actualizar <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="u"
+                  />
+                </div>
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Borrar <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="d"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+              <i class="cil-check" aria-hidden="true"></i>
+              <span id="btnText">Guardar</span>
+            </button>
+            <button
+              class="btn-cerrar"
+              type="button"
+              data-dismiss="modal"
+              (click)="agregar = false"
+            >
+              <i class="cil-x" aria-hidden="true"></i>
+              Cerrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>  
+  <!-- CREAR -->
+  <div
+    [class]="{
+      none: !agregar,
+      contenedor: true
+    }"
+  >
+    <div
+      [class]="{
+        contenedor_model: agregar
+      }"
+    >
+      <div class="form-model">
+        <div class="etiqueta-accion">
+          <h3 style="color: aliceblue">
+            {{ titulo_model }}
+          </h3>
+          <button class="boton_cerrar" type="button" (click)="agregar = false">
+            X
+          </button>
+        </div>
+        <form
+          method="post"
+          class="form-servicio"
+          [formGroup]="formulario"
+          (ngSubmit)="addTipo()"
+        >
+          <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+          </p>
+          <div class="entradas-productos">
+            <div class="entradas-txt-productos">
+              <div class="grupo-form">
+                <div class="entrada-txt-nom">
+                  <div>
+                    <label class="etiqueta-entrada-form"
+                      >Módulo <span style="color: red">*</span></label
+                    >
+                    <select
+                      class="entrada-form"
+                      name="tipo-servicio"
+                      id="tipo-servicio"
+                      formControlName="modulo_id"
+                    >
+                      <option *ngFor="let tipo of modulo_id" [ngValue]="tipo.id">
+                        {{ tipo.nombre }}
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="etiqueta-entrada-form"
+                      >Rol <span style="color: red">*</span></label
+                    >
+                    <select
+                      class="entrada-form"
+                      name="tipo-servicio"
+                      id="tipo-servicio"
+                      formControlName="rol"
+                    >
+                      <option *ngFor="let tipo of rol" [ngValue]="tipo.id">
+                        {{ tipo.nombre }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="grupo-form">
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Leer <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="r"
+                  />
+                </div>
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Escribir <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="w"
+                  />
+                </div>
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Actualizar <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="u"
+                  />
+                </div>
+                <div class="entrada-permisos">
+                  <label class="etiqueta-entrada-form"
+                    >Borrar <span style="color: red">*</span></label
+                  >
+                  <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="checkbox"
+                    formControlName="d"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+              <i class="cil-check" aria-hidden="true"></i>
+              <span id="btnText">Guardar</span>
+            </button>
+            <button
+              class="btn-cerrar"
+              type="button"
+              data-dismiss="modal"
+              (click)="agregar = false"
+            >
+              <i class="cil-x" aria-hidden="true"></i>
+              Cerrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

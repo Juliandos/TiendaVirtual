@@ -1,0 +1,652 @@
+<div class="contenedor-productos">
+    <div class="filtro-agregar">
+    <button *ngIf="permisos.w" class="btn btn-agregar" (click)="accionesClick('', 1, agregar)">
+        <i class="cil-plus"></i>
+    </button>
+    <input
+        type="text"
+        class="filtro"
+        placeholder="Filtrar..."
+        (keyup)="updateFilter($event)"
+    />
+    </div>
+    <ngx-datatable
+    #mydatatable
+    class="material striped"
+    [headerHeight]="50"
+    [limit]="5"
+    [externalSorting]="true"
+    [virtualization]="true"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [rows]="servicios"
+    [columns]="columns"
+    [columnMode]="ColumnMode.flex"
+    *ngIf="permisos.r"
+    >
+    <ngx-datatable-column prop="id" name="Id" [flexGrow]="0.5"
+        ><!-- Me gusta más esta forma -->
+        <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+        >
+        <span>{{ value }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="nombre" [flexGrow]="1"
+        ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+        <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+        >
+        <span class="tableHeader">Nombre</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column
+        prop="fecha_ejecucion"
+        name="Ejecucion"
+        [flexGrow]="1"
+    >
+        <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+        >
+        <span>{{ value }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column
+        prop="fecha_finalizacion"
+        name="Finalizacion"
+        [flexGrow]="1"
+    >
+        <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+        >
+        <span>{{ value }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column
+        prop="servicio_tipo_id"
+        name="Tipo Servicio"
+        [flexGrow]="1"
+    >
+        <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+        >
+        <span>{{ getServicioTipoNombre(value) }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="tipo_pago_id" name="Tipo Pago" [flexGrow]="1">
+        <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+        >
+        <span>{{ getTipoPagoIdNombre(value) }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="acciones" name="Acciones" [flexGrow]="1.2">
+        <ng-template
+        let-value="value"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        >
+            <div 
+                class="div-botones"
+                *ngIf="permisos.u || permisos.d || permisos.r"
+                >
+                <ng-container *ngFor="let item of botones">
+                <button
+                    class="me-1 btn g-botones-acciones"
+                    (click)="accionesClick('Descripcion', rowIndex, item.nombre)"
+                    *appPermissions="{modulo: 'servicio_venta', permiso: item.permiso}"
+                >
+                    <i
+                    [ngClass]="{
+                        'cil-book': item.nombre === 'Leer',
+                        'cil-trash': item.nombre === 'Borrar',
+                        'cil-pencil': item.nombre === 'Actualizar'
+                    }"
+                    ></i>
+                </button>
+                </ng-container>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+    </ngx-datatable>
+    <!-- ACCIONES  -->
+    <div
+    [class]="{
+        contenedor: l || a || b,
+        none: ((l === a) === b) === false
+    }"
+    >
+    <!-- LEER -->
+    <div
+        *ngIf="l"
+        [class]="{
+        contenedor_model: l
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="l = false">
+            X
+            </button>
+        </div>
+        <div class="form-servicio">
+            <table class="tabla-leer-productos">
+            <tbody>
+                <tr>
+                <td>ID:</td>
+                <td id="celId">{{ id }}</td>
+                </tr>
+                <tr>
+                <td>Nombres:</td>
+                <td id="celNombre">{{ nombre }}</td>
+                </tr>
+                <tr>
+                <td>Fecha Ejecución:</td>
+                <td id="celEmail">{{ fecha_ejecucion }}</td>
+                </tr>
+                <tr>
+                <td>Fecha Finalización:</td>
+                <td id="celMensaje">{{ fecha_finalizacion }}</td>
+                </tr>
+                <tr>
+                <td>Tipo servicio:</td>
+                <td id="celMensaje">{{ servicio_tipof }}</td>
+                </tr>
+                <tr>
+                <td>Detalles:</td>
+                <td id="celMensaje">{{ detalles }}</td>
+                </tr>
+                <tr>
+                <td>Referencia Cobro:</td>
+                <td id="celMensaje">{{ referencia_cobro }}</td>
+                </tr>
+                <tr>
+                <td>Dirección:</td>
+                <td id="celMensaje">{{ direccion }}</td>
+                </tr>
+                <tr>
+                <td>Estado:</td>
+                <td id="celMensaje">{{ status }}</td>
+                </tr>
+                <tr>
+                <td>Tipo Pago:</td>
+                <td id="celMensaje">{{ tipo_pagof }}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+            <i class="cil-check" aria-hidden="true"></i>
+            <span id="btnText">Guardar</span>
+            </button>
+            <button
+            class="btn-cerrar"
+            type="button"
+            data-dismiss="modal"
+            (click)="l = false"
+            >
+            <i class="cil-x" aria-hidden="true"></i>
+            Cerrar
+            </button>
+        </div>
+        </div>
+    </div>
+    <!-- Actualizar -->
+    <div
+        *ngIf="a"
+        [class]="{
+        contenedor_model: a
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="a = false">
+            X
+            </button>
+        </div>
+        <form
+            method="post"
+            class="form-servicio"
+            [formGroup]="formulario"
+            (ngSubmit)="updateServicio()"
+        >
+            <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+            </p>
+            <div class="entradas-productos">
+            <div class="entradas-txt-productos">
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-nom">
+                    <label class="etiqueta-entrada-form"
+                    >Nombre <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="text"
+                    placeholder="Nombre Servicio"
+                    formControlName="nombre"
+                    />
+                </div>
+                <div class="entrada-txt-det">
+                    <label class="etiqueta-entrada-form"
+                    >Detalles<span style="color: red">*</span></label
+                    >
+                    <textarea
+                    class="entrada-form"
+                    id="txtDetalle"
+                    name="txtDetalle"
+                    placeholder="Detalles Servicio"
+                    formControlName="detalles"
+                    ></textarea>
+                </div>
+                </div>
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-fe">
+                    <label class="etiqueta-entrada-form"
+                    >Fecha Ejecución <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="FechaEjecucion"
+                    name="FechaEjecucion"
+                    type="date"
+                    placeholder="00-00-00"
+                    formControlName="fecha_ejecucion"
+                    />
+                </div>
+                <div class="entrada-txt-ff">
+                    <label class="etiqueta-entrada-form"
+                    >Fecha Finalización <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="FechaFinalizacion"
+                    name="FechaFinalizacion"
+                    type="date"
+                    placeholder="00-00-00"
+                    formControlName="fecha_finalizacion"
+                    />
+                </div>
+                </div>
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-ref-cobro">
+                    <label class="etiqueta-entrada-form"
+                    >Referencia Cobro <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="txtRefCobro"
+                    name="txtRefCobro"
+                    type="text"
+                    placeholder="Referencia Cobro"
+                    formControlName="referencia_cobro"
+                    />
+                </div>
+                <div class="entrada-txt-dir">
+                    <label class="etiqueta-entrada-form"
+                    >Dirección <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="txtDir"
+                    name="txtDir"
+                    type="text"
+                    placeholder="Dirección del Servicio"
+                    formControlName="direccion"
+                    />
+                </div>
+                </div>
+                <div class="grupo-productos-form">
+                    <div class="entrada-txt-tipo-ser">
+                        <label class="etiqueta-entrada-form"
+                        >Tipo de Servicio<span style="color: red">*</span></label
+                        >
+                        <select
+                        class="entrada-form"
+                        name="tipo-servicio"
+                        id="tipo-servicio"
+                        formControlName="servicio_tipo"
+                        >
+                            <option
+                                *ngFor="let tipo of servicio_tipo"
+                                [ngValue]="tipo.id"
+                            >
+                                {{ tipo.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="entrada-txt-tipo-pago">
+                        <label class="etiqueta-entrada-form"
+                        >Tipo de Pago<span style="color: red">*</span></label
+                        >
+                        <select
+                        class="entrada-form"
+                        name="tipo-pago"
+                        id="tipo-pago"
+                        formControlName="tipo_pago"
+                        >
+                            <option *ngFor="let tipo of tipo_pago"
+                            [value]="tipo.id"
+                            >
+                                {{ tipo.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="entrada-txt-estado">
+                        <label class="etiqueta-entrada-form"
+                        >Estado<span style="color: red">*</span></label
+                        >
+                        <select
+                        class="entrada-form"
+                        name="estado"
+                        id="estado"
+                        formControlName="status"
+                        >
+                        <option value="1">Activo</option>
+                        <option value="0" selected>Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+                <i class="cil-check" aria-hidden="true"></i>
+                <span id="btnText">Guardar</span>
+            </button>
+            <button
+                class="btn-cerrar"
+                type="button"
+                data-dismiss="modal"
+                (click)="agregar = false"
+            >
+                <i class="cil-x" aria-hidden="true"></i>
+                Cerrar
+            </button>
+            </div>
+        </form>
+        </div>
+    </div>
+    <!-- Borrar -->
+    <div
+        *ngIf="b"
+        [class]="{
+        contenedor_model: b
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="b = false">
+            X
+            </button>
+        </div>
+        <form method="post" class="form-servicio">
+            <div class="img-advertencia">
+            <img src="../../../../assets/images/warning.webp" alt="" />
+            <h2>Eliminar Categoría</h2>
+            <p>¿Realmente quiere eliminar la categoría?</p>
+            <div class="botones-form">
+                <button type="button" class="btn-cerrar" (click)="b = false">
+                No, Cancelar!
+                </button>
+                <button
+                type="button"
+                class="btn-guardar"
+                (click)="deleteServicio(id)"
+                >
+                Si, Eliminar!
+                </button>
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+    <!-- CREAR -->
+    <div
+    [class]="{
+        none: !agregar,
+        contenedor: true
+    }"
+    >
+    <div
+        [class]="{
+        contenedor_model: agregar
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="agregar = false">
+            X
+            </button>
+        </div>
+        <form
+            method="post"
+            class="form-servicio"
+            [formGroup]="formulario"
+            (ngSubmit)="addServicio()"
+        >
+            <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+            </p>
+            <div class="entradas-productos">
+            <div class="entradas-txt-productos">
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-nom">
+                    <label class="etiqueta-entrada-form"
+                    >Nombre <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="text"
+                    placeholder="Nombre Servicio"
+                    formControlName="nombre"
+                    />
+                </div>
+                <div class="entrada-txt-det">
+                    <label class="etiqueta-entrada-form"
+                    >Detalles<span style="color: red">*</span></label
+                    >
+                    <textarea
+                    class="entrada-form"
+                    id="txtDetalle"
+                    name="txtDetalle"
+                    placeholder="Detalles Servicio"
+                    formControlName="detalles"
+                    ></textarea>
+                </div>
+                </div>
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-fe">
+                    <label class="etiqueta-entrada-form"
+                    >Fecha Ejecución <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="FechaEjecucion"
+                    name="FechaEjecucion"
+                    type="date"
+                    placeholder="00-00-00"
+                    formControlName="fecha_ejecucion"
+                    />
+                </div>
+                <div class="entrada-txt-ff">
+                    <label class="etiqueta-entrada-form"
+                    >Fecha Finalización <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="FechaFinalizacion"
+                    name="FechaFinalizacion"
+                    type="date"
+                    placeholder="00-00-00"
+                    formControlName="fecha_finalizacion"
+                    />
+                </div>
+                </div>
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-ref-cobro">
+                    <label class="etiqueta-entrada-form"
+                    >Referencia Cobro <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="txtRefCobro"
+                    name="txtRefCobro"
+                    type="text"
+                    placeholder="Referencia Cobro"
+                    formControlName="referencia_cobro"
+                    />
+                </div>
+                <div class="entrada-txt-dir">
+                    <label class="etiqueta-entrada-form"
+                    >Dirección <span style="color: red">*</span></label
+                    >
+                    <input
+                    class="entrada-form"
+                    id="txtDir"
+                    name="txtDir"
+                    type="text"
+                    placeholder="Dirección del Servicio"
+                    formControlName="direccion"
+                    />
+                </div>
+                </div>
+                <div class="grupo-productos-form">
+                <div class="entrada-txt-tipo-ser">
+                    <label class="etiqueta-entrada-form"
+                    >Tipo de Servicio<span style="color: red">*</span></label
+                    >
+                    <select
+                    class="entrada-form"
+                    name="tipo-servicio"
+                    id="tipo-servicio"
+                    formControlName="servicio_tipo"
+                    >
+                    <option
+                        *ngFor="let tipo of servicio_tipo"
+                        [value]="tipo.id"
+                    >
+                        {{ tipo.nombre }}
+                    </option>
+                    </select>
+                </div>
+                <div class="entrada-txt-tipo-pago">
+                    <label class="etiqueta-entrada-form"
+                    >Tipo de Pago<span style="color: red">*</span></label
+                    >
+                    <select
+                    class="entrada-form"
+                    name="tipo-pago"
+                    id="tipo-pago"
+                    formControlName="tipo_pago"
+                    >
+                    <option *ngFor="let tipo of tipo_pago" [value]="tipo.id">
+                        {{ tipo.nombre }}
+                    </option>
+                    </select>
+                </div>
+                <div class="entrada-txt-estado">
+                    <label class="etiqueta-entrada-form"
+                    >Estado<span style="color: red">*</span></label
+                    >
+                    <select
+                    class="entrada-form"
+                    name="estado"
+                    id="estado"
+                    formControlName="status"
+                    >
+                    <option value="1">Activo</option>
+                    <option value="0" selected>Inactivo</option>
+                    </select>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+                <i class="cil-check" aria-hidden="true"></i>
+                <span id="btnText">Guardar</span>
+            </button>
+            <button
+                class="btn-cerrar"
+                type="button"
+                data-dismiss="modal"
+                (click)="agregar = false"
+            >
+                <i class="cil-x" aria-hidden="true"></i>
+                Cerrar
+            </button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+    <!-- TOAST -->
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleRepetido">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>El nombre {{ servicio.nombre }}, ya esta siendo usado, elige otro</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleFallo">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Algo fallo, recomiendo ver la consola (f12)</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+</div>

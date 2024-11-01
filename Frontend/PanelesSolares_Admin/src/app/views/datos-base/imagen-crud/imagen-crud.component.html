@@ -1,0 +1,439 @@
+<div class="contenedor-categorias">
+    <div class="filtro-agregar">
+    <button *ngIf="permisos.w" class="btn btn-agregar" (click)="accionesClick('', 1, agregar)">
+        <i class="cil-plus"></i>
+    </button>
+    <input
+        type="text"
+        class="filtro"
+        placeholder="Filtrar..."
+        (keyup)="updateFilter($event)"
+    />
+    </div>
+    <ngx-datatable
+    #mydatatable
+    class="material striped"
+    [headerHeight]="50"
+    [limit]="5"
+    [externalSorting]="true"
+    [virtualization]="true"
+    [columnMode]="ColumnMode.force"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [rows]="imagenes"
+    [columns]="columns"
+    [columnMode]="ColumnMode.flex"
+    *ngIf="permisos.r"
+    >
+    <ngx-datatable-column name="Id" [flexGrow]="0.5">
+        <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+        >
+        <span>{{ value }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="nombre" name="Nombre" [flexGrow]="1">
+        <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-row="row"
+        let-value="value"
+        >
+        <!-- Faltante - fun -->
+        <span title="Double click to edit">{{ value }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="url" name="Url" [flexGrow]="1">
+        <ng-template
+        ngx-datatable-cell-template
+        let-value="value"
+        let-rowIndex="rowIndex"
+        let-row="row"
+        >
+        <span title="Double click to edit">{{ value }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="producto_id" name="producto" [flexGrow]="1">
+        <ng-template
+        ngx-datatable-cell-template
+        let-value="value"
+        let-rowIndex="rowIndex"
+        let-row="row"
+        >
+        <span>{{ getProductoNombre(value) }}</span>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Acciones" [flexGrow]="1.2">
+        <ng-template
+        let-value="value"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+        >
+            <div 
+                class="div-botones"
+                *ngIf="permisos.u || permisos.d || permisos.r"
+                >
+                <ng-container *ngFor="let item of botones">
+                <button
+                    class="me-1 btn g-botones-acciones"
+                    (click)="accionesClick('Descripcion', rowIndex, item.nombre)"
+                    *appPermissions="{modulo: 'imagen', permiso: item.permiso}"
+                >
+                    <i
+                    [ngClass]="{
+                        'cil-book': item.nombre === 'Leer',
+                        'cil-trash': item.nombre === 'Borrar',
+                        'cil-pencil': item.nombre === 'Actualizar'
+                    }"
+                    ></i>
+                </button>
+                </ng-container>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+    </ngx-datatable>
+    <!-- ACCIONES  -->
+    <div
+    [class]="{
+        contenedor: l || a || b,
+        none: ((l === a) === b) === false
+    }"
+    >
+    <!-- LEER -->
+    <div
+        *ngIf="l"
+        [class]="{
+        contenedor_model: l
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="l = false">
+            X
+            </button>
+        </div>
+        <div class="form-categoria">
+            <table class="tabla-leer-categorias">
+            <tbody>
+                <tr>
+                <td>ID:</td>
+                <td id="celId">{{ id }}</td>
+                </tr>
+                <tr>
+                <td>Nombres:</td>
+                <td id="celNombre">{{ nombre }}</td>
+                </tr>
+                <tr>
+                    <td>Foto:</td>
+                    <td id="imgCategoria"><img [src]="url" /></td>
+                </tr>
+                <tr>
+                <td>Producto:</td>
+                <td id="Producto">{{ getProductoNombre(producto) }}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="pie-pagina-model">
+            <button
+            class="btn-cerrar"
+            type="button"
+            data-dismiss="modal"
+            (click)="l = false"
+            >
+            <i class="cil-x" aria-hidden="true"></i>
+            Cerrar
+            </button>
+        </div>
+        </div>
+    </div>
+    <!-- Actualizar -->
+    <div
+        *ngIf="a"
+        [class]="{
+        contenedor_model: a
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="a = false">
+            X
+            </button>
+        </div>
+        <form
+            method="post"
+            class="form-categoria"
+            [formGroup]="formulario"
+            (ngSubmit)="updateImagen()"
+        >
+            <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+            </p>
+            <div class="entradas-categorias">
+                <div class="entradas-txt-categorias">
+                    <div class="entrada-txt-form">
+                    <label class="etiqueta-entrada-form"
+                        >Nombre <span style="color: red">*</span></label
+                    >
+
+                    <input
+                        class="entrada-form"
+                        type="text"
+                        id="nombre"
+                        name="Nombre"
+                        formControlName="nombre"
+                    />
+                    </div>
+                    <div class="entrada-txt-tipo-ser">
+                        <label class="etiqueta-entrada-form"
+                        >Producto <span style="color: red">*</span></label
+                        >
+                        <select
+                        class="entrada-form"
+                        name="tipo-servicio"
+                        id="tipo-servicio"
+                        formControlName="producto_id"
+                        >
+                            <option
+                                *ngFor="let tipo of productosId"
+                                [ngValue]="tipo.id"
+                            >
+                                {{ tipo.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="entrada-img-categorias">
+                    <div style="display: flex; justify-content: space-between">
+                        <label for="etiqueta-entrada-form">Foto (570x380)</label>
+                        <button
+                        type="button"
+                        class="boton_cerrar"
+                        (click)="cambiarPortada('logoeco.jpg', true)"
+                        >
+                        X
+                        </button>
+                    </div>
+                    <div
+                        [ngStyle]="contenedorImgCategorias"
+                        [class]="{ contenedor_img_categorias: !btnBorrarPortada }"
+                    >
+                        <input
+                        type="file"
+                        name="foto"
+                        class="foto-previa"
+                        formControlName="url"
+                        (change)="
+                            cambiarPortada(formulario.controls['url'].value, false)
+                        "
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+                <i class="cil-check" aria-hidden="true"></i>
+                <span id="btnText">Guardar</span>
+            </button>
+            <button
+                class="btn-cerrar"
+                type="button"
+                data-dismiss="modal"
+                (click)="a = false"
+            >
+                <i class="cil-x" aria-hidden="true"></i>
+                Cerrar
+            </button>
+            </div>
+        </form>
+        </div>
+    </div>
+    <!-- Borrar -->
+    <div
+        *ngIf="b"
+        [class]="{
+        contenedor_model: b
+        }"
+    >
+        <div class="form-model">
+            <div class="etiqueta-accion">
+                <h3 style="color: aliceblue">
+                {{ titulo_model }}
+                </h3>
+                <button class="boton_cerrar" type="button" (click)="b = false">
+                X
+                </button>
+            </div>
+            <form method="post" class="form-categoria">
+                <div class="img-advertencia">
+                <img src="../../../../assets/images/warning.webp" alt="" />
+                <h2>Eliminar Imagen</h2>
+                <p>¿Realmente quiere eliminar la Imagen?</p>
+                <div class="botones-form">
+                    <button type="button" class="btn-cerrar" (click)="b = false">
+                    No, Cancelar!
+                    </button>
+                    <button
+                    type="button"
+                    class="btn-guardar"
+                    (click)="deleteImagen(id)"
+                    >
+                    Si, Eliminar!
+                    </button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <!-- CREAR -->
+    <div
+    [class]="{
+        none: !agregar,
+        contenedor: true
+    }"
+    >
+    <div
+        [class]="{
+        contenedor_model: agregar
+        }"
+    >
+        <div class="form-model">
+        <div class="etiqueta-accion">
+            <h3 style="color: aliceblue">
+            {{ titulo_model }}
+            </h3>
+            <button class="boton_cerrar" type="button" (click)="agregar = false">
+            X
+            </button>
+        </div>
+        <form
+            method="post"
+            class="form-categoria"
+            [formGroup]="formulario"
+            (ngSubmit)="addImagen()"
+        >
+            <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+            </p>
+            <div class="entradas-categorias">
+            <div class="entradas-txt-categorias">
+                <div class="entrada-txt-form">
+                <label class="etiqueta-entrada-form"
+                    >Nombre <span style="color: red">*</span></label
+                >
+                <input
+                    class="entrada-form"
+                    id="txtNombre"
+                    name="txtNombre"
+                    type="text"
+                    placeholder="Nombre Categoría"
+                    formControlName="nombre"
+                />
+                </div>
+                <div class="entrada-txt-tipo-ser">
+                    <label class="etiqueta-entrada-form"
+                    >Producto <span style="color: red">*</span></label
+                    >
+                    <select
+                    class="entrada-form"
+                    name="tipo-servicio"
+                    id="tipo-servicio"
+                    formControlName="producto_id"
+                    >
+                        <option
+                            *ngFor="let tipo of productosId"
+                            [ngValue]="tipo.id"
+                        >
+                            {{ tipo.nombre }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="entrada-img-categorias">
+                <div style="display: flex; justify-content: space-between">
+                    <label for="etiqueta-entrada-form">Foto (570x380)</label>
+                    <button
+                    type="button"
+                    class="boton_cerrar"
+                    (click)="cambiarPortada('logoeco.jpg', true)"
+                    >
+                    X
+                    </button>
+                </div>
+            <div
+                [ngStyle]="contenedorImgCategorias"
+                [class]="{ contenedor_img_categorias: !btnBorrarPortada }"
+            >
+                <input
+                type="file"
+                name="foto"
+                class="foto-previa"
+                formControlName="url"
+                (change)="
+                    cambiarPortada(formulario.controls['url'].value, false)
+                "
+                />
+            </div>
+            </div>
+            </div>
+            <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+                <i class="cil-check" aria-hidden="true"></i>
+                <span id="btnText">Guardar</span>
+            </button>
+            <button
+                class="btn-cerrar"
+                type="button"
+                data-dismiss="modal"
+                (click)="agregar = false"
+            >
+                <i class="cil-x" aria-hidden="true"></i>
+                Cerrar
+            </button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+    <!-- TOAST -->
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleRepetido">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>El nombre {{ imagen.nombre }}, ya esta siendo usado, elige otro</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleFallo">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Algo fallo, recomiendo ver la consola (f12)</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+</div>

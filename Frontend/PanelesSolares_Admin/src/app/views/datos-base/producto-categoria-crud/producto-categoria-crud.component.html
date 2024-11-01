@@ -1,0 +1,309 @@
+<div class="contenedor-categorias">
+    <div class="filtro-agregar">
+        <button *ngIf="permisos.w" class="btn btn-agregar" (click)="accionesClick('', 1, agregar)">
+            <i class="cil-plus"></i>
+        </button>
+        <input type="text" class="filtro" placeholder="Filtrar..." (keyup)="updateFilter($event)" />
+    </div>
+    <ngx-datatable #mydatatable class="material striped" [headerHeight]="50" [limit]="5" [externalSorting]="true"
+        [virtualization]="true" [columnMode]="ColumnMode.force" [footerHeight]="50" rowHeight="auto" [rows]="ProCats"
+        [columns]="columns" [columnMode]="ColumnMode.flex" *ngIf="permisos.r">
+
+        <ngx-datatable-column prop="categoria_id" name="Categoria" [flexGrow]="1">
+            <ng-template ngx-datatable-cell-template let-column="column" let-sort="sortFn" let-value="value">
+                <span>{{ getProCat(value) }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column prop="producto_id" name="Producto" [flexGrow]="1">
+            <ng-template ngx-datatable-cell-template let-column="column" let-sort="sortFn" let-value="value">
+                <span>{{ getProducto(value) }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Acciones" [flexGrow]="1.2">
+            <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <div class="div-botones" *ngIf="permisos.u || permisos.d || permisos.r">
+                    <ng-container *ngFor="let item of botones">
+                        <button class="me-1 btn g-botones-acciones"
+                            (click)="accionesClick('Descripcion', rowIndex, item.nombre)"
+                            *appPermissions="{modulo: 'producto_categoria', permiso: item.permiso}">
+                            <i [ngClass]="{
+                    'cil-book': item.nombre === 'Leer',
+                    'cil-trash': item.nombre === 'Borrar',
+                    'cil-pencil': item.nombre === 'Actualizar'
+                }"></i>
+                        </button>
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+    <!-- ACCIONES  -->
+    <div [class]="{
+        contenedor: l || a || b,
+        none: ((l === a) === b) === false
+        }">
+        <!-- LEER -->
+        <div *ngIf="l" [class]="{
+            contenedor_model: l
+        }">
+            <div class="form-model">
+                <div class="etiqueta-accion">
+                    <h3 style="color: aliceblue">
+                        {{ titulo_model }}
+                    </h3>
+                    <button class="boton_cerrar" type="button" (click)="l = false">
+                        X
+                    </button>
+                </div>
+                <div class="form-categoria">
+                    <table class="tabla-leer-categorias">
+                        <tbody>
+                            <tr>
+                                <td>Categoria:</td>
+                                <td id="celId">{{ getProCat(categoria_idf) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Producto:</td>
+                                <td id="celNombre">{{ getProducto(producto_idf) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pie-pagina-model">
+                    <button class="btn-cerrar" type="button" data-dismiss="modal" (click)="l = false">
+                        <i class="cil-x" aria-hidden="true"></i>
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Actualizar -->
+        <div *ngIf="a" [class]="{
+            contenedor_model: a
+        }">
+            <div class="form-model">
+                <div class="etiqueta-accion">
+                    <h3 style="color: aliceblue">
+                        {{ titulo_model }}
+                    </h3>
+                    <button class="boton_cerrar" type="button" (click)="a = false">
+                        X
+                    </button>
+                </div>
+                <form method="post" class="form-categoria" [formGroup]="formulario" (ngSubmit)="updateProCat()">
+                    <p>
+                        Los campos con asterisco (<span style="color: red">*</span>) son
+                        obligatorios.
+                    </p>
+                    <div class="entradas-categorias">
+                        <div class="entradas-txt-categorias">
+                            <div class="entrada-txt-form">
+                                <label class="etiqueta-entrada-form">Servicio Venta <span
+                                        style="color: red">*</span></label>
+                                <select class="entrada-form" name="tipo-servicio" id="tipo-servicio"
+                                    formControlName="categoria_id">
+                                    <option *ngFor="let tipo of categoria_id" [ngValue]="tipo.id">
+                                        {{ tipo.nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="entrada-txt-form">
+                                <label class="etiqueta-entrada-form">Producto <span style="color: red">*</span></label>
+                                <select class="entrada-form" name="producto" id="producto"
+                                    formControlName="producto_id">
+                                    <option *ngFor="let tipo of producto_id" [ngValue]="tipo.id">
+                                        {{ tipo.nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pie-pagina-model">
+                        <button id="btnActionForm" class="btn-guardar" type="submit">
+                            <i class="cil-check" aria-hidden="true"></i>
+                            <span id="btnText">Guardar</span>
+                        </button>
+                        <button class="btn-cerrar" type="button" data-dismiss="modal" (click)="a = false">
+                            <i class="cil-x" aria-hidden="true"></i>
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Borrar -->
+        <div *ngIf="b" [class]="{
+            contenedor_model: b
+        }">
+            <div class="form-model">
+                <div class="etiqueta-accion">
+                    <h3 style="color: aliceblue">
+                        {{ titulo_model }}
+                    </h3>
+                    <button class="boton_cerrar" type="button" (click)="b = false">
+                        X
+                    </button>
+                </div>
+                <form method="post" class="form-categoria">
+                    <div class="img-advertencia">
+                        <img src="../../../../assets/images/warning.webp" alt="" />
+                        <h2>Eliminar Categoría</h2>
+                        <p>¿Realmente quiere eliminar la categoría?</p>
+                        <div class="botones-form">
+                            <button type="button" class="btn-cerrar" (click)="b = false">
+                                No, Cancelar!
+                            </button>
+                            <button type="button" class="btn-guardar" (click)="deleteProCat()">
+                                Si, Eliminar!
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- CREAR -->
+    <div [class]="{
+        none: !agregar,
+        contenedor: true
+        }">
+        <div [class]="{
+            contenedor_model: agregar
+        }">
+            <div class="form-model">
+                <div class="etiqueta-accion">
+                    <h3 style="color: aliceblue">
+                        {{ titulo_model }}
+                    </h3>
+                    <button class="boton_cerrar" type="button" (click)="agregar = false">
+                        X
+                    </button>
+                </div>
+                <form method="post" class="form-categoria" [formGroup]="formulario" (ngSubmit)="addProCat()">
+                    <p>
+                        Los campos con asterisco (<span style="color: red">*</span>) son
+                        obligatorios.
+                    </p>
+                    <div class="entradas-categorias">
+                        <div class="entradas-txt-categorias">
+                            <div class="entrada-txt-form">
+                                <label class="etiqueta-entrada-form">Categoria <span style="color: red">*</span></label>
+                                <select class="entrada-form" name="tipo-servicio" id="tipo-servicio"
+                                    formControlName="categoria_id">
+                                    <option *ngFor="let tipo of categoria_id" [ngValue]="tipo.id">
+                                        {{ tipo.nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="entrada-txt-form">
+                                <label class="etiqueta-entrada-form">Producto <span style="color: red">*</span></label>
+                                <select class="entrada-form" name="producto" id="producto"
+                                    formControlName="producto_id">
+                                    <option *ngFor="let tipo of producto_id" [ngValue]="tipo.id">
+                                        {{ tipo.nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pie-pagina-model">
+                        <button id="btnActionForm" class="btn-guardar" type="submit">
+                            <i class="cil-check" aria-hidden="true"></i>
+                            <span id="btnText">Guardar</span>
+                        </button>
+                        <button class="btn-cerrar" type="button" data-dismiss="modal" (click)="agregar = false">
+                            <i class="cil-x" aria-hidden="true"></i>
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- TOAST -->
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleRepetido">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Esta relación {{ProCat.categoria_id}} {{ProCat.producto_id}}, ya existe, deberías crear otra.</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleFallo">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Algo fallo, recomiendo ver la consola (f12)</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleNoPosible">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Lo siento, no es posible Actualizar los valores, excepto la cantidad.</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <!-- TOAST -->
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleRepetido">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Esta relación {{ProCat.servicio_venta_id}} {{ProCat.producto_id}}, ya existe, deberías crear otra.</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleFallo">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Algo fallo, recomiendo ver la consola (f12)</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast [visible]="visibleNoPosible">
+            <c-toast-header>
+                <toast-sample-icon></toast-sample-icon>
+                Error
+            </c-toast-header>
+            <c-toast-body>
+                <p>Lo siento, no es posible Actualizar los valores, excepto la cantidad.</p>
+                <c-progress thin>
+                    <c-progress-bar [value]="1"></c-progress-bar>
+                </c-progress>
+            </c-toast-body>
+        </c-toast>
+    </c-toaster>
+</div>

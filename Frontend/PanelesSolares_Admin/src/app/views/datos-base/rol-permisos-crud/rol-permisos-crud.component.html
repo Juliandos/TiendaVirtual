@@ -1,0 +1,354 @@
+<div class="contenedor-categorias">
+  <div class="filtro-agregar">
+    <button *ngIf="permisos.w" class="btn btn-agregar" (click)="accionesClick('', 1, agregar)">
+      <i class="cil-plus"></i>
+    </button>
+    <div>
+      <input
+        type="text"
+        class="filtro"
+        placeholder="Filtrar..."
+        (keyup)="updateFilter($event)"
+      />
+    </div>
+    <div 
+      class="div-botones"
+      *ngIf="permisos.u || permisos.d"
+      >
+      <ng-container *ngFor="let item of botones">
+        <button
+          class="me-1 btn g-botones-acciones"
+          (click)="accionesClick('Descripcion', 1, item.nombre)"
+          *appPermissions="{modulo: 'rol_permisos', permiso: item.permiso}"
+        >
+          <i
+            [ngClass]="{
+              'cil-trash': item.nombre === 'Borrar',
+              'cil-pencil': item.nombre === 'Actualizar'
+            }"
+          ></i>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+  <ngx-datatable
+    #mydatatable
+    class="material striped"
+    [headerHeight]="50"
+    [limit]="15"
+    [externalSorting]="true"
+    [virtualization]="true"
+    [columnMode]="ColumnMode.force"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [rows]="personasRoles"
+    [columns]="columns"
+    [columnMode]="ColumnMode.flex"
+    *ngIf="permisos.r"
+  >
+    <ngx-datatable-column prop="rol_id" name="Id" [flexGrow]="0.5"
+    ><!-- Me gusta más esta forma -->
+    <ng-template
+      ngx-datatable-cell-template
+      let-column="column"
+      let-sort="sortFn"
+      let-value="value"
+    >
+      <span>{{ getRol(value) }}</span>
+    </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="r" name="Leer" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-cell-template
+        let-column="column"
+        let-sort="sortFn"
+        let-value="value"
+      >
+        <span>{{ value }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="w" [flexGrow]="1">
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Escribir</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="u" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Actualizar</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="d" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Borrar</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="modulo_id" [flexGrow]="1"
+      ><!-- Pero hay esta forma y esta tambien la de categoria y contacto -->
+      <ng-template
+        ngx-datatable-header-template
+        let-column="column"
+        let-sort="sortFn"
+      >
+        <span class="tableHeader">Módulo</span>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+  <!-- ACCIONES  -->
+  <div
+    [class]="{
+      contenedor: a || b,
+      none: (a === b)
+    }"
+  >
+    <!-- Actualizar -->
+    <div
+      *ngIf="a"
+      [class]="{
+        contenedor_model: a
+      }"
+    >
+      <div class="form-model">
+        <div class="etiqueta-accion">
+          <h3 style="color: aliceblue">
+            {{ titulo_model }}
+          </h3>
+          <button class="boton_cerrar" type="button" (click)="a = false; contador = 0">
+            X
+          </button>
+        </div>
+        <form method="post" class="form-categoria" [formGroup]="formulario" (ngSubmit)="updatePermisoRol()" >
+          <c-alert color="danger" class="none" id='repeatuser'>Debes agregar un rol.</c-alert>
+          <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+          </p>
+          <div class="entradas-categorias">
+            <div class="entradas-txt-categorias">
+              <div class="entrada-txt-form">
+                <label class="etiqueta-entrada-form"
+                  >Rol <span style="color: red">*</span></label>
+                <select
+                class="entrada-form"
+                name="tipo-servicio"
+                id="tipo-servicio"
+                formControlName="rol_id"
+                >
+                  <option
+                      *ngFor="let tipo of rol_id"
+                      [ngValue]="tipo.id"
+                  >
+                      {{ tipo.nombre }}
+                  </option>
+                </select>
+              </div>
+              <div id="permisos_actualizar" class="entrada_actualizar">
+                
+              </div>
+            </div>
+          </div>
+          <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+              <i class="cil-check" aria-hidden="true"></i>
+              <span id="btnText">Guardar</span>
+            </button>
+            <button
+              class="btn-cerrar"
+              type="button"
+              data-dismiss="modal"
+              (click)="a = false; contador = 0"
+            >
+              <i class="cil-x" aria-hidden="true"></i>
+              Cerrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Borrar -->
+    <div
+      *ngIf="b"
+      [class]="{
+        contenedor_model: b
+      }"
+    >
+      <div class="form-model">
+        <div class="etiqueta-accion">
+          <h3 style="color: aliceblue">
+            {{ titulo_model }}
+          </h3>
+          <button class="boton_cerrar" type="button" (click)="b = false">
+            X
+          </button>
+        </div>
+        <form method="post" class="form-categoria" [formGroup]="formulario">
+          <!-- <div class="img-advertencia">
+            <img src="../../../../assets/images/warning.webp" alt="" />
+            <h2>Eliminar Categoría</h2>
+            <p>¿Realmente quiere eliminar la categoría?</p> -->
+            <div class="entradas-txt-categorias">
+              <div class="entrada-txt-form">
+                <label class="etiqueta-entrada-form"
+                  >Rol <span style="color: red">*</span></label>
+                <select
+                class="entrada-form"
+                name="tipo-servicio"
+                id="tipo-servicio"
+                formControlName="rol_id"
+                >
+                  <option
+                      *ngFor="let tipo of rol_id"
+                      [ngValue]="tipo.id"
+                  >
+                      {{ tipo.nombre }}
+                  </option>
+                </select>
+              </div>
+            <div class="botones-form">
+              <button
+                type="button"
+                class="btn-guardar"
+                (click)="deletePermisoRol()"
+              >
+                Si, Eliminar!
+              </button>
+              <button type="button" class="btn-cerrar" (click)="b = false">
+                No, Cancelar!
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- CREAR -->
+  <div
+    [class]="{
+      none: !agregar,
+      contenedor: true
+    }"
+  >
+    <div
+      [class]="{
+        contenedor_model: agregar
+      }"
+    >
+      <div class="form-model">
+        <div class="etiqueta-accion">
+          <h3 style="color: aliceblue">
+            {{ titulo_model }}
+          </h3>
+          <button class="boton_cerrar" type="button" (click)="agregar = false; contador = 0">
+            X
+          </button>
+        </div>
+        <form method="post" class="form-categoria" [formGroup]="formulario" (ngSubmit)="addPermisoRol()">
+          <c-alert color="danger" class="none" id='repeatuser'>Debes agregar un rol.</c-alert>
+          <p>
+            Los campos con asterisco (<span style="color: red">*</span>) son
+            obligatorios.
+          </p>
+          <div class="entradas-categorias">
+            <div class="entradas-txt-categorias">
+              <div class="entrada-txt-form">
+                <label class="etiqueta-entrada-form"
+                  >Rol <span style="color: red">*</span></label>
+                <select
+                class="entrada-form"
+                name="tipo-servicio"
+                id="tipo-servicio"
+                formControlName="rol_id"
+                >
+                  <option
+                      *ngFor="let tipo of rol_id"
+                      [ngValue]="tipo.id"
+                  >
+                      {{ tipo.nombre }}
+                  </option>
+                </select>
+              </div>
+              <div id="permisos" class="entrada-crear">
+                
+              </div>
+            </div>
+          </div>
+          <div class="pie-pagina-model">
+            <button id="btnActionForm" class="btn-guardar" type="submit">
+              <i class="cil-check" aria-hidden="true"></i>
+              <span id="btnText">Guardar</span>
+            </button>
+            <button
+              class="btn-cerrar"
+              type="button"
+              data-dismiss="modal"
+              (click)="agregar = false; contador = 0"
+            >
+              <i class="cil-x" aria-hidden="true"></i>
+              Cerrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- TOAST -->
+  <c-toaster [placement]="position" class="p-3" position="fixed">
+    <c-toast [visible]="visibleRepetido">
+        <c-toast-header>
+            <toast-sample-icon></toast-sample-icon>
+            Error
+        </c-toast-header>
+        <c-toast-body>
+            <p>Este Rol {{getRol(this.personasRol.rol_id)}}, ya tiene permisos creados.</p>
+            <c-progress thin>
+                <c-progress-bar [value]="1"></c-progress-bar>
+            </c-progress>
+        </c-toast-body>
+    </c-toast>
+  </c-toaster>
+  <c-toaster [placement]="position" class="p-3" position="fixed">
+    <c-toast
+      [visible]="visibleNoPermisos">
+      <c-toast-header>
+        <toast-sample-icon></toast-sample-icon>
+        Error
+      </c-toast-header>
+      <c-toast-body>
+        <p>El Rol {{rol_id_del}}, No tiene permisos creados, no puede ser eliminado</p>
+        <c-progress thin>
+          <c-progress-bar [value]="1"></c-progress-bar>
+        </c-progress>
+      </c-toast-body>
+    </c-toast>
+  </c-toaster>
+  <c-toaster [placement]="position" class="p-3" position="fixed">
+    <c-toast
+      [visible]="visibleNoActualizar">
+      <c-toast-header>
+        <toast-sample-icon></toast-sample-icon>
+        Error
+      </c-toast-header>
+      <c-toast-body>
+        <p>El Rol {{rol_id_del}}, No tiene permisos creados, no puede ser actualizado.</p>
+        <c-progress thin>
+          <c-progress-bar [value]="1"></c-progress-bar>
+        </c-progress>
+      </c-toast-body>
+    </c-toast>
+  </c-toaster>
+</div>
+  

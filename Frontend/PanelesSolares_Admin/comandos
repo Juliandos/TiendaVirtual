@@ -1,0 +1,5 @@
+ng --help
+ng g m views/DatosBase --routing
+ng g s services/detalle-venta
+ng g c views/datos-base/ProductosCrud --module "datos-base"
+ng add @ng-bootstrap/ng-bootstrap
