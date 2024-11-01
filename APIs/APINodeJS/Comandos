@@ -1,0 +1,17 @@
+- npm init
+- npm install express --save
+- ejecucion node main.js
+- npm i cors
+- npm init -y
+- npm install -g typescript
+- npm i sequelize sequelize-cli
+- npm i mysql2 cors express nodemon sequelize-auto
+- sequelize-auto -o "./models" -d panelessolares -u root -h localhost -e mysql
+- npm install typescript @types/express @types/mysql
+- tsc 
+- npm i @types/cors
+- sequelize-auto -o "./models" -d panelessolares -h localhost -u root -e mysql -l ts
+- npm install ts-node-dev
+- ts-node-dev dist/src/main.js
+- "start:dev": "tsc -w & nodemon dist/src/main.js"
+- npm install ts-node
