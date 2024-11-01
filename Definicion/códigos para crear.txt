@@ -1,0 +1,14 @@
+crear un entorno virtual
+
+- Me ubico en la carpeta anteriro a la cualquiero crear el entorno virual y aplico
+- python -m venv (nombre del entorno)
+- como activarlo me ubico en la carpeta madre (nombre del entorno)/Scripts/activate.bat y deactivate
+
+- otra forma es ubicarme en la carpeta u escribir 
+- virtualenv venv
+- como activarlo me ubico en la carpeta madre source ./(nombre del entorno)/bin/activate
+
+Crear un servidor con uvicorn
+
+- uvicorn --help
+- uvicorn main:app --host="0.0.0.0" --port="5000" --reload

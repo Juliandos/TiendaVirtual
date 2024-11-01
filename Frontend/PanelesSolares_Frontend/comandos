@@ -1,0 +1,34 @@
+npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+npm install dotenv
+Si no funciona una instalación de npm haceresto
+
+#     - 1. Fuerza la instalación ignorando los conflictos
+# Puedes usar la opción --force para ignorar los conflictos de dependencias y forzar la instalación:
+
+# sh
+# Copiar código
+# npm install ngx-icon-picker --save --force
+# 2. Usa la opción --legacy-peer-deps
+# Si la opción --force no resuelve el problema, puedes intentar usar --legacy-peer-deps, que instala las dependencias sin realizar la verificación de conflictos:
+
+# sh
+# Copiar código
+# npm install ngx-icon-picker --save --legacy-peer-deps
+# 3. Verifica y actualiza tus dependencias
+# Revisa tu archivo package.json para asegurarte de que las versiones de tus dependencias sean compatibles. Puedes usar herramientas como npm outdated para ver qué dependencias están desactualizadas y actualizarlas.
+
+# 4. Eliminar node_modules y package-lock.json
+# A veces, eliminar el directorio node_modules y el archivo package-lock.json y luego realizar una instalación limpia puede resolver problemas de dependencias:
+
+# sh
+# Copiar código
+# rm -rf node_modules
+# rm package-lock.json
+# npm install
+# 5. Usa npx
+# Otra alternativa es usar npx para instalar el paquete temporalmente sin agregarlo a package.json:
+
+# sh
+# Copiar código
+# npx install ngx-icon-picker
+# Si ninguna de estas soluciones resuelve el problema, por favor proporciona más detalles sobre tu configuración actual y las versiones de Angular, Node.js y npm que estás utilizando, para poder ofrecerte una asistencia más específica.

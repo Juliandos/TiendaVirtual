@@ -1,0 +1,86 @@
+1. Proyecto Real - Paneles Solares: Productos stock, proyectos, trabajadores, administradores, coordinadores, CMS (Content Manangement System)
+1.1 Frontend en múltiples frameworks: angular, react
+1.2 Backend en múltiples APIs:
+1.2.1 API Reportes/Facturas PDF en Java
+1.2.2 API Almacenamiento en NodeJS: MySQL Server
+1.2.3 API Principal/Controladores en Python: FastAPI
+1.2.4 API X en PHP
+
+Recursos y herramientas:
+- MySQL Workbench
+- Postman
+- IntelliJ
+- PyCharm
+- WebStorm
+- JasperSoft Studio (Diseño de reportes)
+
+
+Tarea:
+
+Definir unos requerimientos (modo borrador)
+
+Productos
+RF1: Crear un producto
+RF2: Actualizar un producto
+RF3: Editar un producto
+RF4: Eliminar un producto
+
+Usuarios:
+RF6: Crear un Usuario. Asignar rol.
+RF7: Actualizar un usuario
+RF8: Editar un Usuario
+RF9: Eliminar un  Usuario.
+
+Pedidos
+RF10: Crear un pedido. Asignar rol.
+RF11: Actualizar un pedido
+RF12: Editar un pedido
+RF13: Eliminar un  pedido.
+
+Roles
+RF14: Crear un rol. Asignar rol.
+RF15: Actualizar un rol
+RF16: Editar un rol
+RF17: Eliminar un rol.
+
+Cliente:
+RF18: Crear un clientes. Asignar rol.
+RF19: Actualizar un clientes
+RF20: Editar un clientes
+RF21: Eliminar un clientes.  
+
+Páginas
+RF22: Crear un pagina. Asignar rol.
+RF23: Actualizar un pagina
+RF24: Editar un pagina
+RF25: Eliminar un pagina.
+
+Permisos
+RF26: Crear un clientes. Asignar rol.
+RF27: Actualizar un clientes
+RF28: Editar un clientes
+RF29: Eliminar un clientes.
+
+Categorias
+RF30: Crear un categoria. Asignar rol.
+RF31: Actualizar un categoria
+RF32: Editar un categoria
+RF33: Eliminar un categoria.
+
+Servicios:
+RF34: Crear servicio de instalación
+RF35: Ver servicios en curso
+RF36: Asociar los trabajadores que van a realizar la instalación
+RF37: Cancelar servicio
+
+Gestión de credenciales:
+RF38: Login
+RF39: Logout
+RF40: Recuperar contraseña
+RF41: Crear registro
+RF42: Inhabilitar/deshabilitar un usuario
+
+
+RF2: Generar reporte PDF con los proyectos ejecutados en los 30 días (o en un rango de fechas)
+RF3: Visualizaciones para las ganancias en los últimos 15 días
+RF4: ...
