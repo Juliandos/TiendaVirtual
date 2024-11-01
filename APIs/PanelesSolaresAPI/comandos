@@ -1,0 +1,9 @@
+- crear entorno: python -m venv venv, de forma alterna devería buscar el instalador de python3818, buscar el python.exe, y sería C://
+- activar entorno: venv\Scripts\activate.bat
+- instalar fastApi, con el entorno virtual activo: pip install fastapi
+- instalar servidor ASGI Uvicorn: pip install "uvicorn[standard]" - esto esta en la página oficial de FastApi
+- Para correr la aplicación main: uvicorn main:app --reload (el--reload es en desarrollo no en producción), hay formas de modificar eso con uvicorn --help
+- Para el login y usar oAuth2 hay que ionstalar: pip install python-multipart
+- asd: pip install "uvicorn[standard]" - pip install fastapi - pip install "python-jose[cryptography]" - pip install "passlib[bcrypt]" - pip install requests - pip install python-multipart, estas instalaciones no las hace y hay que hacerlas manualmente, ¿Porque ?
+
+- 

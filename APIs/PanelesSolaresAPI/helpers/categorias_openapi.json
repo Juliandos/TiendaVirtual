@@ -1,0 +1,117 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Categorías",
+    "description": "API para gestionar categorías",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/categorias": {
+      "get": {
+        "summary": "Obtener todas las categorías",
+        "responses": {
+          "200": {
+            "description": "Lista de categorías exitosamente obtenida"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear una nueva categoría",
+        "requestBody": {
+          "description": "Datos de la nueva categoría",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Categoria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Categoría creada exitosamente"
+          },
+          "400": {
+            "description": "Solicitud incorrecta"
+          }
+        }
+      }
+    },
+    "/categorias/{id}": {
+      "get": {
+        "summary": "Obtener una categoría por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría encontrada exitosamente"
+          },
+          "404": {
+            "description": "Categoría no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar una categoría por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Datos actualizados de la categoría",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Categoria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoría actualizada exitosamente"
+          },
+          "404": {
+            "description": "Categoría no encontrada"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar una categoría por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoría eliminada exitosamente"
+          },
+          "404": {
+            "description": "Categoría no encontrada"
+          }
+        }
+      }
+    }
+  }
+  
+}
