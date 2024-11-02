@@ -1,21 +1,31 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Banner({ className }) {
-  const categoriasRef = useRef([]);
+  const [portada, setPortada] = useState(null);
 
   useEffect(() => {
-    fetch(`${apiUrl}/categorias/todas`)
-        .then(response => response.json())
-        .then(data => {
-          categoriasRef.current = data;
-          console.log(categoriasRef.current);
-        })
-        .catch(error => console.error('Error:', error));
-  }, [])
+    const fetchCategorias = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/categorias/todas`);
+        const data = await response.json();
+        if (data[1] && data[1].portada) {
+          setPortada(data[1].portada);
+        }
+      } catch (error) {
+        console.error('Error al cargar la portada:', error);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
+
+  if (!portada) {
+    return null; // O puedes mostrar un componente de carga
+  }
   
 
   return (
@@ -24,17 +34,16 @@ export default function Banner({ className }) {
         <div className="container-x mx-auto">
           <div className="main-wrapper w-full">
             <div className="banner-card xl:flex xl:space-x-[30px] xl:h-[600px]  mb-[30px]">
+              {/* <button onClick={prueba}>Prueba</button> */}
               <div data-aos="fade-right" className="xl:w-[740px] w-full h-full">
                 <Link to="/single-product">
                   <picture>
                     <source
                       media="(min-width:1025px)"
-                      srcSet={`http://localhost:8000/categorias/imagen/12-abrigos1.jpg`}
+                      srcSet={`${apiUrl}/categorias/imagen/${portada}`}
                     />
                     <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }assets/images/perro.png`}
+                      src={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/Abc.jpg`}
                       alt=""
                       className="w-full max-w-full h-auto object-cover"
                     />
