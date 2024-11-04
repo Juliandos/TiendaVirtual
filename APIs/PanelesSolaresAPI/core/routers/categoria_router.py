@@ -68,7 +68,7 @@ def crear_categoria(Categoria: Categoria_crear):
 
     categoria_creada = response.json()
 
-    nombre_archivo = os.path.join('assets', 'images', f'{categoria_creada["id"]}-{Categoria.portada}')
+    nombre_archivo = os.path.join('assets', 'images', f'{Categoria.portada}')
     crear_imagen_base64(Categoria.portadaBase64, nombre_archivo)
 
     return categoria_creada
