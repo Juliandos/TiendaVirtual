@@ -41,7 +41,7 @@ export default function Banner({ className }) {
         <div className="container-x mx-auto">
           <div className="main-wrapper w-full">
             <div className="banner-card xl:flex xl:space-x-[30px] xl:h-[600px] mb-[30px]">
-              <div data-aos="fade-right" className="xl:w-[740px] w-full h-full">
+              <div data-aos="fade-right" className="xl:w-[740px] w-full h-full overflow-hidden">
                 <Link to="/single-product">
                   <picture>
                     <source
@@ -51,7 +51,7 @@ export default function Banner({ className }) {
                     <img
                       src={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/product-img-3.jpg`}
                       alt="alt de prueba img"
-                      className="w-full max-w-full h-auto object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </picture>
                 </Link>
