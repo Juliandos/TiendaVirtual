@@ -17,9 +17,7 @@ export default function ProductCardStyleOne({ datas, type }) {
       <div
         className="product-card-img w-full h-[300px]"
         style={{
-          background: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
-            datas.image
-          }) no-repeat center`,
+          background: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${datas.image}) no-repeat center`,
         }}
       >
         {/* product available progress */}

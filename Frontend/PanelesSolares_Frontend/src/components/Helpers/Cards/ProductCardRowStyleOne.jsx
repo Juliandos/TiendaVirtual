@@ -5,6 +5,8 @@ import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
 
 export default function ProductCardRowStyleTwo({ className, datas, type }) {
+  console.log(datas.image);
+  
   return (
     <div
       data-aos="fade-left"

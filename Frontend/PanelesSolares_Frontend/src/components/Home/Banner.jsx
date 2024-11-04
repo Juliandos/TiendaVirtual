@@ -12,9 +12,7 @@ export default function Banner({ className }) {
       try {
         const response = await fetch(`${apiUrl}/categorias/todas`);
         const data = await response.json();
-        if (data[1] && data[1].portada) {
-          setPortada(data[1].portada);
-        }
+        setPortada(data);
       } catch (error) {
         console.error('Error al cargar la portada:', error);
       }
@@ -24,7 +22,7 @@ export default function Banner({ className }) {
   }, []);
 
   if (!portada) {
-    return null; // O puedes mostrar un componente de carga
+    return null;
   }
   
 
@@ -34,18 +32,17 @@ export default function Banner({ className }) {
         <div className="container-x mx-auto">
           <div className="main-wrapper w-full">
             <div className="banner-card xl:flex xl:space-x-[30px] xl:h-[600px]  mb-[30px]">
-              {/* <button onClick={prueba}>Prueba</button> */}
               <div data-aos="fade-right" className="xl:w-[740px] w-full h-full">
                 <Link to="/single-product">
                   <picture>
                     <source
                       media="(min-width:1025px)"
-                      srcSet={`${apiUrl}/categorias/imagen/${portada}`}
+                      srcSet={`${apiUrl}/categorias/imagen/${portada[1].portada}`}
                     />
                     <img
-                      src={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/Abc.jpg`}
-                      alt=""
-                      className="w-full max-w-full h-auto object-cover"
+                      src={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/product-img-3.jpg`}
+                      alt="alt de prueba"
+                      className="w-full max-w-full h-auto object-cover block xl:hidden"
                     />
                   </picture>
                 </Link>

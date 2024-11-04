@@ -313,22 +313,22 @@ export default function ProductsCompaire() {
                   </td>
                   <td className="product w-[235px] bg-white px-6 border-r border-qgray-border pb-[20px] align-top">
                     <span className="text-[13px] font-normal text-qgraytwo">
-                      Apple MacBook Air 13"
+                      Apple MacBook Air 13
                     </span>
                   </td>
                   <td className="product w-[235px] bg-white px-6 border-r border-qgray-border pb-[20px] align-top">
                     <span className="text-[13px] font-normal text-qgraytwo">
-                      Apple MacBook Air 13"
+                      Apple MacBook Air 13
                     </span>
                   </td>
                   <td className="product w-[235px] bg-white px-6 border-r border-qgray-border pb-[20px] align-top">
                     <span className="text-[13px] font-normal text-qgraytwo">
-                      Apple MacBook Air 13"
+                      Apple MacBook Air 13
                     </span>
                   </td>
                   <td className="product w-[235px] bg-white px-6 border-r border-qgray-border pb-[20px] align-top">
                     <span className="text-[13px] font-normal text-qgraytwo">
-                      Apple MacBook Air 13"
+                      Apple MacBook Air 13
                     </span>
                   </td>
                 </tr>
