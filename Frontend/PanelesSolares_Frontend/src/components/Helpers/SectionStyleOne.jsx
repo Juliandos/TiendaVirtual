@@ -3,6 +3,7 @@ import CategoryCard from "./Cards/CategoryCard";
 import ProductCardStyleOne from "./Cards/ProductCardStyleOne";
 import DataIteration from "./DataIteration";
 import ViewMoreTitle from "./ViewMoreTitle";
+import PropTypes from 'prop-types';
 
 export default function SectionStyleOne({
   className,
@@ -13,10 +14,13 @@ export default function SectionStyleOne({
   products = [],
   categoryBackground,
 }) {
+
   const filterBrands = brands.filter(
     (value, index, array) => array.indexOf(value) === index
   );
+
   const [productLength] = useState(3);
+  
   // useEffect(() => {
   //   if (window.matchMedia("(max-width: 1024px)")) {
   //     setLength(2);
@@ -51,3 +55,13 @@ export default function SectionStyleOne({
     </div>
   );
 }
+
+SectionStyleOne.propTypes = {
+  className: PropTypes.string,
+  categoryTitle: PropTypes.string.isRequired,
+  sectionTitle: PropTypes.string.isRequired,
+  seeMoreUrl: PropTypes.string.isRequired,
+  brands: PropTypes.array,
+  products: PropTypes.array.isRequired,
+  categoryBackground: PropTypes.string,
+};

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export default function CategoryCard({ background, title, brands = [] }) {
   return (
@@ -64,3 +65,9 @@ export default function CategoryCard({ background, title, brands = [] }) {
     </div>
   );
 }
+
+CategoryCard.propTypes = {
+  background: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  brands: PropTypes.arrayOf(PropTypes.string),
+};
