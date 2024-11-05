@@ -1,4 +1,4 @@
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import datas from "../../data/products.json";
 import SectionStyleFour from "../Helpers/SectionStyleFour";
 import SectionStyleOne from "../Helpers/SectionStyleOne";
@@ -13,12 +13,36 @@ import BrandSection from "./BrandSection";
 import CampaignCountDown from "./CampaignCountDown";
 import ProductsAds from "./ProductsAds";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 export default function Home() {
   const { products } = datas;
   const brands = [];
-  products.forEach((product) => {
-    brands.push(product.brand);
+  // products.forEach((product) => {
+  //   brands.push(product.brand);
+  // });
+
+  const [productos, setProductos] = useState([]);
+  const marcas = [];
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/productos/todos`);
+        const data = await response.json();
+        setProductos(data);
+        
+      } catch (error) {
+        console.error('Error al cargar la marca:', error);
+      }
+    };
+    
+    fetchProductos();
+  }, []);
+
+  productos.forEach((product) => {
+    marcas.push(product.marca);
   });
 
   // const [ads, setAds] = useState(false);
@@ -29,6 +53,7 @@ export default function Home() {
   // {
   //   setAds(true);
   // }, []);
+
   return (
     <>
       <Layout>
@@ -37,7 +62,7 @@ export default function Home() {
         <Banner className="banner-wrapper mb-[60px]" />
         <SectionStyleOne
           products={products}
-          brands={brands}
+          brands={marcas}
           categoryTitle="Mobile & Tablet"
           sectionTitle="Gamer World"
           seeMoreUrl="/all-products"

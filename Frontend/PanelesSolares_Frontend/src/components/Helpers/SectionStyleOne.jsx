@@ -15,10 +15,6 @@ export default function SectionStyleOne({
   categoryBackground,
 }) {
 
-  const filterBrands = brands.filter(
-    (value, index, array) => array.indexOf(value) === index
-  );
-
   const [productLength] = useState(3);
   
   // useEffect(() => {
@@ -26,6 +22,7 @@ export default function SectionStyleOne({
   //     setLength(2);
   //   }
   // }, []);
+
   return (
     <div data-aos="fade-up" className={`section-style-one ${className || ""}`}>
       <ViewMoreTitle categoryTitle={sectionTitle} seeMoreUrl={seeMoreUrl}>
@@ -35,7 +32,7 @@ export default function SectionStyleOne({
               <CategoryCard
                 background={categoryBackground}
                 title={categoryTitle}
-                brands={filterBrands}
+                brands={brands}
               />
             </div>
             <DataIteration
