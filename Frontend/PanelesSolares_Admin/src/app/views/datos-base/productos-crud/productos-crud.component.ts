@@ -127,6 +127,8 @@ export class ProductosCrudComponent implements OnInit {
         this.productos = [...this.productos];
         this.loadingIndicator = true;
         this.permisosAcciones()
+        console.log(this.productos);
+        
       },
       (error) => {
         console.log(error);

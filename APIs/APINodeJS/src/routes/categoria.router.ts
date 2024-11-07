@@ -65,7 +65,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Categoría no encontrada' });
     }
     await categoriaEliminada.destroy();
-    console.log('Sí se eliminó')
+    // console.log('Sí se eliminó')
     return res.json({ message: 'Categoría eliminada con éxito' });
   } catch (error) {
     console.error('Error al eliminar categoría por ID:', error);

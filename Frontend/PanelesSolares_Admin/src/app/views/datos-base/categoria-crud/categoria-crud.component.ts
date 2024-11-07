@@ -125,6 +125,8 @@ export class CategoriaCRUDComponent implements OnInit {
         this.categorias = response;
         this.categorias = [...this.categorias];
         this.permisosAcciones();
+        console.log(this.categorias);
+        
       },
       (error) => {
         console.log(error);
@@ -411,5 +413,6 @@ export class CategoriaCRUDComponent implements OnInit {
       // Leer el archivo como una URL de datos (Base64)
       reader.readAsDataURL(file);
     }
+
   }
 }

@@ -87,6 +87,7 @@ class Imagen_crear(BaseModel):
     nombre: str
     url: str
     producto_id: int = Path(gt=0)
+    portadaBase64: str
     
 class Imagen_actualizar(BaseModel):
     id: int = Path(gt=0)

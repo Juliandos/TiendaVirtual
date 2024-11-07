@@ -1,6 +1,4 @@
-import base64
 import os
-
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 import requests
@@ -32,7 +30,7 @@ def listar_categorias(request: Request):
         nombre_archivo = f"{c['portada']}"
 
         c['urlImagen'] = request.url_for('obtener_imagen_por_nombre', nombre=nombre_archivo)._url
-    
+
     return categorias
 
 
@@ -68,8 +66,8 @@ def crear_categoria(Categoria: Categoria_crear):
 
     categoria_creada = response.json()
 
-    nombre_archivo = os.path.join('assets', 'images', f'{Categoria.portada}')
-    crear_imagen_base64(Categoria.portadaBase64, nombre_archivo)
+    nombre_carpeta = os.path.join('assets', 'images', f'{Categoria.portada}')
+    crear_imagen_base64(Categoria.portadaBase64, nombre_carpeta)
 
     return categoria_creada
 
@@ -101,18 +99,6 @@ def actualizar_categoria_por_id(Categoria: Categoria_actualizar):
 
 
 @router_categoria.get('/imagen/{nombre}')
-def actualizar_imagen_por_id(nombre: str):
-    nombre_archivo = os.path.join('assets', 'images', nombre)
-    
-    # Verificar si el archivo existe
-    if not os.path.exists(nombre_archivo):
-        raise HTTPException(status_code=404, detail="Imagen no encontrada")
-    
-    # Retornar la imagen como respuesta
-    return FileResponse(path=nombre_archivo, media_type='image/jpeg') # MIME type
-
-
-@router_categoria.get('/imagen/{nombre}')
 def obtener_imagen_por_nombre(nombre: str):
     # Construir la ruta completa del archivo
     nombre_archivo = os.path.join('assets', 'images', nombre)
@@ -123,7 +109,3 @@ def obtener_imagen_por_nombre(nombre: str):
     
     # Retornar la imagen como respuesta
     return FileResponse(path=nombre_archivo, media_type='image/jpeg')
-
-
-def obtener_url_imagen_por_nombre(nombre: str, request):
-    return request.url_for('obtener_imagen_por_nombre', nombre=nombre)

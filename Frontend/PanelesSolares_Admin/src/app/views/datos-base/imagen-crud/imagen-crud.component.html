@@ -219,7 +219,7 @@
                         <button
                         type="button"
                         class="boton_cerrar"
-                        (click)="cambiarPortada('logoeco.jpg', true)"
+                        (click)="cambiarPortada(null, 'logoeco.jpg', true)"
                         >
                         X
                         </button>
@@ -234,7 +234,7 @@
                         class="foto-previa"
                         formControlName="url"
                         (change)="
-                            cambiarPortada(formulario.controls['url'].value, false)
+                            cambiarPortada(null, formulario.controls['url'].value, false)
                         "
                         />
                     </div>
@@ -367,7 +367,7 @@
                     <button
                     type="button"
                     class="boton_cerrar"
-                    (click)="cambiarPortada('logoeco.jpg', true)"
+                    (click)="cambiarPortada(null, 'logoeco.jpg', true)"
                     >
                     X
                     </button>
@@ -382,7 +382,7 @@
                 class="foto-previa"
                 formControlName="url"
                 (change)="
-                    cambiarPortada(formulario.controls['url'].value, false)
+                    cambiarPortada($event, formulario.controls['url'].value, false)
                 "
                 />
             </div>

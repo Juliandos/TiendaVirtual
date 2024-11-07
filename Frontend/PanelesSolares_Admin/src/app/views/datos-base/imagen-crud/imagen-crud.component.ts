@@ -2,16 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductosService } from '../../../services/productos.service';
 import { ImagenService } from '../../../services/imagen.service';
-import { PermisosService } from '../../../services/permisos.service';
-import { PersonaRolService } from '../../../services/persona-rol.service';
-import { PersonasService } from '../../../services/personas.service';
-import { RolService } from '../../../services/rol.service';
-import { ModuloService } from '../../../services/modulo.service';
 import { RolPermisosService } from '../../../services/rol-permisos.service';
 import { ColumnMode, DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Router } from '@angular/router';
 import { Permiso } from 'src/app/models/Permiso.enum';
-
+// Tarea, modificar la interfaz de imagen para que se pueda ver en productos o para que se pueda subir mas de una imagen a la vez.
 @Component({
   selector: 'app-imagen-crud',
   templateUrl: './imagen-crud.component.html',
@@ -29,11 +24,6 @@ export class ImagenCrudComponent implements OnInit{
     private ProductosService: ProductosService,
     private imagenService: ImagenService,
     private RolPermisosService: RolPermisosService,
-    private RolService: RolService,
-    private PermisosService: PermisosService,
-    private ModuloService: ModuloService,
-    private PersonasService: PersonasService,
-    private PersonaRolService: PersonaRolService,
     private router: Router
     ) { 
 
@@ -49,6 +39,9 @@ export class ImagenCrudComponent implements OnInit{
       producto_id: [0, Validators.required]
     });
   }
+
+  base64Output: string = '';
+  portada : string | ArrayBuffer | null = null;
 
   columns = [
     { prop: 'id' },
@@ -189,7 +182,7 @@ export class ImagenCrudComponent implements OnInit{
         this.entradaPortada = this.imagenes[rowIndex].url
         else this.entradaPortada = 'logoeco.png'
         
-        this.cambiarPortada(this.entradaPortada, false);
+        this.cambiarPortada(null, this.entradaPortada, false);
 
         break;
       case 'Borrar':
@@ -202,7 +195,7 @@ export class ImagenCrudComponent implements OnInit{
         this.url = this.imagenes[rowIndex].url;
         break;
       case false:
-        this.cambiarPortada('logoeco.png', true);
+        this.cambiarPortada(null, 'logoeco.png', true);
         this.agregar = true;
         this.titulo_model = 'Agregar Imagen';
         break;
@@ -211,7 +204,7 @@ export class ImagenCrudComponent implements OnInit{
     }
   }
 
-  cambiarPortada(portada: String, cerrar: Boolean) {
+  cambiarPortada(event: any, portada: String, cerrar: Boolean) {
 
     let partesRuta, nombreArchivo;
     if (portada && !cerrar) {
@@ -232,6 +225,10 @@ export class ImagenCrudComponent implements OnInit{
         ') center center / contain no-repeat',
     });
     this.imagen.url = nombreArchivo;
+
+    if (event) {
+      this.generarBase64(event);
+    }
   }
 
   addImagen() {
@@ -252,6 +249,7 @@ export class ImagenCrudComponent implements OnInit{
     }
 
     this.formulario.get('url')?.setValue(null);
+    this.imagen.portadaBase64 = this.base64Output;
     
     this.agregar = false;
 
@@ -270,12 +268,12 @@ export class ImagenCrudComponent implements OnInit{
             this.todosImagenes();
           }, 3000);
         });
-      }else{
-        this.visibleRepetido = !this.visibleRepetido
-        setTimeout(() => {
-          this.todosImagenes();
-        }, 3000);
-      }
+    }else{
+      this.visibleRepetido = !this.visibleRepetido
+      setTimeout(() => {
+        this.todosImagenes();
+      }, 3000);
+    }
   }
 
   updateImagen() {
@@ -350,5 +348,25 @@ export class ImagenCrudComponent implements OnInit{
     this.imagenes = [...this.imagenes];
 
     // this.mydatatable.offset = 0;
+  }
+
+  generarBase64(event: any) {
+    const file: File = event.target.files[0];
+    
+    if (file) {
+      const reader = new FileReader();
+      
+      // Se ejecuta cuando la lectura del archivo es exitosa
+      reader.onload = () => {
+        this.base64Output = reader.result as string;
+        this.base64Output = this.base64Output.split(',')[1];
+        
+        this.portada = reader.result;
+      };
+
+      // Leer el archivo como una URL de datos (Base64)
+      reader.readAsDataURL(file);
+    }
+    
   }
 }
