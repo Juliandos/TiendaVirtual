@@ -46,7 +46,6 @@ def crear_rol_permiso(r_p: rol_permiso__crear):
     response = requests.request("POST", url_rol_permisos, headers=headers, data=payload)
     return response.json()
 
-
 @router_rol_permiso.delete('/eliminar/{rol_id}/{permiso_id}')
 def eliminar_rol_permiso_por_id(rol_id: int, permiso_id: int):
     
@@ -57,7 +56,6 @@ def eliminar_rol_permiso_por_id(rol_id: int, permiso_id: int):
 
     response = requests.request("DELETE", url, headers=headers, data=payload)
     return response.json()
-
 
 @router_rol_permiso.put('/actualizar')
 def actualizar_rol_permiso_por_id(r_p: rol_permiso__actualizar):
@@ -73,7 +71,6 @@ def actualizar_rol_permiso_por_id(r_p: rol_permiso__actualizar):
 
     response = requests.request("PUT", url, headers=headers, data=payload)
     return response.json()
-
 
 @router_rol_permiso.post('/modulo')
 async def obtener_permisos_por_modulo(request: Request):

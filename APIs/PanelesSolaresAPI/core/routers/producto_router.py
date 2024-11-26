@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Path
+from fastapi import APIRouter, Path, Request
 import requests
 import json
 
@@ -82,4 +82,18 @@ def actualizar_producto_por_id(producto: producto_actualizar):
     }
 
     response = requests.request("PUT", url, headers=headers, data=payload)
+    return response.json()
+
+@router_producto.post('/producto')
+async def obtener_producto_imagen(request: Request):
+    url = f'{url_productos}producto'
+    
+    datos_json = json.dumps(await request.json())
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.post(url, headers=headers, data=datos_json)
+
     return response.json()
