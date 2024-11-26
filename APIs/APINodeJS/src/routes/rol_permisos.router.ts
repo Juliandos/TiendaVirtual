@@ -79,6 +79,7 @@ router.delete('/:rol_id/:permisos_id', async (req: Request, res: Response) => {
   }
 });
 
+// Ruta para obtener módulo y permisos por email y nombre de módulo
 router.post('/modulo', async (req: Request, res: Response) => {
   try {
     const {email, modulo} = req.body;

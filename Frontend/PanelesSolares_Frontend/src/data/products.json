@@ -4,13 +4,13 @@
       "id": "62aefe9ad8b80d5234af625a",
       "image": "product-img-1.jpg",
       "brand": "xioami",
-      "review": 3,
+      "review": 5,
       "title": "Xoggle aute et pariatur adipisicing nostrud et excepteur",
       "offer_price": "$18.73",
       "price": "$27.27",
       "campaingn_product": false,
-      "cam_product_available": null,
-      "cam_product_sale": null,
+      "cam_product_available":  20,
+      "cam_product_sale": 3,
       "product_type": null
     },
     {

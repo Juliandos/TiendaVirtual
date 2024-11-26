@@ -3,6 +3,7 @@ import Compair from "../icons/Compair";
 import QuickViewIco from "../icons/QuickViewIco";
 import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
+import PropTypes from "prop-types";
 
 export default function ProductCardStyleOne({ datas, type }) {
   const available =
@@ -25,7 +26,7 @@ export default function ProductCardStyleOne({ datas, type }) {
           <>
             <div className="px-[30px] absolute left-0 top-3 w-full">
               <div className="progress-title flex justify-between ">
-                <p className="text-xs text-qblack font-400 leading-6">
+                <p className="text-xs text-qblack font-400 leading-6">{/*manejar dinámicamente   (***)*/}
                   Prodcuts Available
                 </p>
                 <span className="text-sm text-qblack font-600 leading-6">
@@ -124,3 +125,9 @@ export default function ProductCardStyleOne({ datas, type }) {
     </div>
   );
 }
+
+// Validación de las props
+ProductCardStyleOne.propTypes = {
+  datas: PropTypes.array.isRequired, // Asegúrate de que 'datas' sea un array
+  type: PropTypes.string,            // 'type' es opcional y debe ser un string
+};

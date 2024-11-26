@@ -19,6 +19,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export default function Home() {
   const { products } = datas;
   const brands = [];
+  let margenProductos = 0;
   // products.forEach((product) => {
   //   brands.push(product.brand);
   // });
@@ -41,8 +42,11 @@ export default function Home() {
     fetchProductos();
   }, []);
 
-  productos.forEach((product) => {
-    marcas.push(product.marca);
+  productos.forEach((product) => {// selección de marcas especificas modificar (***)
+    if (margenProductos <= 4) {
+      marcas.push(product.marca);
+    }
+    margenProductos++;
   });
 
   // const [ads, setAds] = useState(false);
@@ -64,9 +68,10 @@ export default function Home() {
           products={products}
           brands={marcas}
           categoryTitle="Mobile & Tablet"
-          sectionTitle="Gamer World"
+          sectionTitle="Marcas relevantes"// selección de marcas especificas modificar (***)
           seeMoreUrl="/all-products"
           className="category-products mb-[60px]"
+          categoryBackground ={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/new-letter.jpg`}
         />
         <BrandSection
           sectionTitle="Shop by Brand"

@@ -12,7 +12,7 @@ export default function CategoryCard({ background, title, brands = [] }) {
             import.meta.env.VITE_PUBLIC_URL
           }/assets/images/section-category-1.jpg`
         }) no-repeat`,
-        backgroundSize: "cover",
+        backgroundSize: "100% 100%",
       }}
     >
       <div>

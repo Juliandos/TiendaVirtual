@@ -37,7 +37,6 @@ def serializar_datetime(obj):
         return obj.isoformat()
     raise TypeError("Tipo no serializable")
 
-
 def crear_imagen_base64(hash, nombre_archivo):
     image_data = base64.b64decode(hash)
 

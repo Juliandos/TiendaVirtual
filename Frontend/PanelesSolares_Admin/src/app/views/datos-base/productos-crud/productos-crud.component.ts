@@ -141,10 +141,13 @@ export class ProductosCrudComponent implements OnInit {
   }
 
   permisosAcciones(){
-    const modulo: any = localStorage.getItem('persona_email')
-
-    this.RolPermisosService.obtenerPermisos('producto', modulo).subscribe(
+    const email: any = localStorage.getItem('persona_email')
+    console.log(email);
+    
+    this.RolPermisosService.obtenerPermisos('producto', email).subscribe(
       (response: any) => {
+        console.log(response);
+        
         if (response.r) this.permisos.r = response.r
         if (response.w) this.permisos.w = response.w
         if (response.u) this.permisos.u = response.u

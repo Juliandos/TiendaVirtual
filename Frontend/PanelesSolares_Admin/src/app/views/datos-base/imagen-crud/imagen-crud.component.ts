@@ -205,7 +205,7 @@ export class ImagenCrudComponent implements OnInit{
   }
 
   cambiarPortada(event: any, portada: String, cerrar: Boolean) {
-
+    
     let partesRuta, nombreArchivo;
     if (portada && !cerrar) {
       partesRuta = portada.split('\\');
@@ -220,9 +220,7 @@ export class ImagenCrudComponent implements OnInit{
       height: '30vh',
       margin: '0 0 1rem 0',
       background:
-        'url(../../../../assets/images/' +
-        nombreArchivo +
-        ') center center / contain no-repeat',
+        'url(http://127.0.0.1:8000/categorias/imagen/' + nombreArchivo + ') center center / contain no-repeat',
     });
     this.imagen.url = nombreArchivo;
 
@@ -335,7 +333,6 @@ export class ImagenCrudComponent implements OnInit{
   updateFilter(event: any): void {
     const val = event.target.value.toLowerCase();
     // Filtra los datos de acuerdo con la cadenvala
-    console.log(this.tempImagenes);
     
     const filteredData = this.tempImagenes.filter((row) => {
       return (
