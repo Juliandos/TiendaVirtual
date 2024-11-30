@@ -11,7 +11,7 @@
       "campaingn_product": false,
       "cam_product_available":  20,
       "cam_product_sale": 3,
-      "product_type": null
+      "product_type": "popular"
     },
     {
       "id": "62aefe9a17780a9e549646c2",

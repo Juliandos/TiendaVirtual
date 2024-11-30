@@ -5,7 +5,10 @@ import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
 import PropTypes from "prop-types";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function ProductCardStyleOne({ datas, type }) {
+  
   const available =
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *
@@ -18,7 +21,7 @@ export default function ProductCardStyleOne({ datas, type }) {
       <div
         className="product-card-img w-full h-[300px]"
         style={{
-          background: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${datas.image}) no-repeat center`,
+          background: `url(${apiUrl}/categorias/imagen/hombres.jpg) no-repeat center`,
         }}
       >
         {/* product available progress */}
@@ -128,6 +131,9 @@ export default function ProductCardStyleOne({ datas, type }) {
 
 // Validación de las props
 ProductCardStyleOne.propTypes = {
-  datas: PropTypes.array.isRequired, // Asegúrate de que 'datas' sea un array
+  datas: PropTypes.oneOfType([
+    PropTypes.array, // Permite arrays
+    PropTypes.object // Permite objetos
+  ]).isRequired, // Asegúrate de que 'datas' sea un array
   type: PropTypes.string,            // 'type' es opcional y debe ser un string
 };

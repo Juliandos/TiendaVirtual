@@ -15,9 +15,10 @@ import ProductsAds from "./ProductsAds";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
 export default function Home() {
   const { products } = datas;
+  // console.log(datas);
+  
   const brands = [];
   let margenProductos = 0;
   // products.forEach((product) => {
@@ -25,7 +26,9 @@ export default function Home() {
   // });
 
   const [productos, setProductos] = useState([]);
+  const [productosMRelevantes, setProductosMRelevantes] = useState([]);
   const marcas = [];
+  let productosRelevantes = [];
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -38,9 +41,31 @@ export default function Home() {
         console.error('Error al cargar la marca:', error);
       }
     };
+
+    const fetchProductosMarcasRelevantes = async (productoId) => {
+      try {
+        const response = await fetch(`${apiUrl}/productos/producto`, {
+          method: 'POST', // Cambiamos a POST
+          headers: {
+            'Content-Type': 'application/json', // Indicamos que el cuerpo es JSON
+          },
+          body: JSON.stringify({ producto_id: productoId }), // Enviamos el cuerpo de la solicitud
+        });
     
-    fetchProductos();
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+    
+        const data = await response.json();
+        setProductosMRelevantes(data);
+      } catch (error) {
+        console.error('Error al cargar el producto:', error);
+      }
+    };
+      fetchProductosMarcasRelevantes(101);
+      fetchProductos();
   }, []);
+  // console.log(productosMRelevantes);
 
   productos.forEach((product) => {// selección de marcas especificas modificar (***)
     if (margenProductos <= 4) {
@@ -48,6 +73,30 @@ export default function Home() {
     }
     margenProductos++;
   });
+
+  function combinarDatos(data1, data2) {
+    // Reorganizamos los datos del primer conjunto
+    // console.log(data1, data2);
+    let i = 0;
+    const productos1 = data1.map(producto => ({
+        id: producto.producto_id,
+        title: producto.producto_nombre,
+        referencia: producto.referencia,
+        descripcion: producto.descripcion,
+        brand: producto.marca,
+        cam_product_sale: producto.cantidad_minima,
+        cam_product_available: producto.cantidad_actual,
+        precio_compra: producto.precio_compra,
+        price: producto.precio_venta,
+        image: producto.imagen_url,
+        review: data2.products[i].review,
+        offer_price: data2.products[i].offer_price,
+        product_type: data2.products[i].product_type
+    }));
+    return productos1;
+  }
+  productosRelevantes = combinarDatos(productosMRelevantes, datas);
+  console.log(productosRelevantes);
 
   // const [ads, setAds] = useState(false);
   // const adsHandle = () => {
@@ -57,7 +106,7 @@ export default function Home() {
   // {
   //   setAds(true);
   // }, []);
-
+  
   return (
     <>
       <Layout>
@@ -65,7 +114,7 @@ export default function Home() {
         <div className="btn w-5 h-5 "></div>
         <Banner className="banner-wrapper mb-[60px]" />
         <SectionStyleOne
-          products={products}
+          products={productosRelevantes}
           brands={marcas}
           categoryTitle="Mobile & Tablet"
           sectionTitle="Marcas relevantes"// selección de marcas especificas modificar (***)
