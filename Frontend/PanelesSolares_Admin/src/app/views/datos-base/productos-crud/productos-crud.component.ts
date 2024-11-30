@@ -109,6 +109,7 @@ export class ProductosCrudComponent implements OnInit {
   visibleRepetido: boolean = false;
   visibleFallo: boolean = false;
   position: string = "middle-center";
+  
 
   todosProductos() {
     this.visibleFallo = false
@@ -146,7 +147,6 @@ export class ProductosCrudComponent implements OnInit {
     
     this.RolPermisosService.obtenerPermisos('producto', email).subscribe(
       (response: any) => {
-        console.log(response);
         
         if (response.r) this.permisos.r = response.r
         if (response.w) this.permisos.w = response.w

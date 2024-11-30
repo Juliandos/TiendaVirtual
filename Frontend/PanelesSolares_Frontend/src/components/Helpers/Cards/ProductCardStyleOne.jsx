@@ -8,11 +8,12 @@ import PropTypes from "prop-types";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function ProductCardStyleOne({ datas, type }) {
-  
   const available =
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *
     100;
+    console.log(datas);
+    
   return (
     <div
       className="product-card-one w-full h-full bg-white relative group overflow-hidden"
@@ -21,7 +22,7 @@ export default function ProductCardStyleOne({ datas, type }) {
       <div
         className="product-card-img w-full h-[300px]"
         style={{
-          background: `url(${apiUrl}/categorias/imagen/hombres.jpg) no-repeat center`,
+          background: `url(${apiUrl}/categorias/imagen/${datas.image}) no-repeat center`,
         }}
       >
         {/* product available progress */}
@@ -29,7 +30,8 @@ export default function ProductCardStyleOne({ datas, type }) {
           <>
             <div className="px-[30px] absolute left-0 top-3 w-full">
               <div className="progress-title flex justify-between ">
-                <p className="text-xs text-qblack font-400 leading-6">{/*manejar dinámicamente   (***)*/}
+                <p className="text-xs text-qblack font-400 leading-6">
+                  {/*manejar dinámicamente   (***)*/}
                   Prodcuts Available
                 </p>
                 <span className="text-sm text-qblack font-600 leading-6">
@@ -133,7 +135,7 @@ export default function ProductCardStyleOne({ datas, type }) {
 ProductCardStyleOne.propTypes = {
   datas: PropTypes.oneOfType([
     PropTypes.array, // Permite arrays
-    PropTypes.object // Permite objetos
+    PropTypes.object, // Permite objetos
   ]).isRequired, // Asegúrate de que 'datas' sea un array
-  type: PropTypes.string,            // 'type' es opcional y debe ser un string
+  type: PropTypes.string, // 'type' es opcional y debe ser un string
 };

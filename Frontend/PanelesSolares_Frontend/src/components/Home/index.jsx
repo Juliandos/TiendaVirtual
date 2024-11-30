@@ -96,7 +96,7 @@ export default function Home() {
     return productos1;
   }
   productosRelevantes = combinarDatos(productosMRelevantes, datas);
-  console.log(productosRelevantes);
+  // console.log(productosRelevantes);
 
   // const [ads, setAds] = useState(false);
   // const adsHandle = () => {

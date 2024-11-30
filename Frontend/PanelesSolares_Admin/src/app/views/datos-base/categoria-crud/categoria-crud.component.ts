@@ -406,7 +406,6 @@ export class CategoriaCRUDComponent implements OnInit {
       reader.onload = () => {
         this.base64Output = reader.result as string;
         this.base64Output = this.base64Output.split(',')[1];
-        
         this.portada = reader.result;
       };
 
