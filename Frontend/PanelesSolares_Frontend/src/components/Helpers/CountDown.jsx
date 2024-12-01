@@ -34,6 +34,7 @@ function CountDown(lastDate) {
       const distance =
         new Date(year, month, date, hours, minutes, seconds).getTime() -
         now.getTime();
+
       if (distance < 0) {
         clearInterval(timer);
         return;

@@ -220,7 +220,9 @@ export class ImagenCrudComponent implements OnInit{
       height: '30vh',
       margin: '0 0 1rem 0',
       background:
-        'url(http://127.0.0.1:8000/categorias/imagen/' + nombreArchivo + ') center center / contain no-repeat',
+        'url(../../../../assets/images/' +
+        nombreArchivo +
+        ') center center / contain no-repeat',
     });
     this.imagen.url = nombreArchivo;
 
@@ -256,7 +258,7 @@ export class ImagenCrudComponent implements OnInit{
         (response: any) => {
           this.agregar = false;
           this.imagen = {};
-          this.formulario.reset();
+          // this.formulario.reset();
           this.todosImagenes();
         },
         (error) => {

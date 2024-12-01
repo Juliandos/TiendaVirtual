@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import CountDown from "../Helpers/CountDown";
+import PropTypes from 'prop-types';
 
 export default function CampaignCountDown({
   className,
@@ -8,6 +9,10 @@ export default function CampaignCountDown({
   appscreen,
 }) {
   const { showDate, showHour, showMinute, showSecound } = CountDown(lastDate);
+  // console.log(showDate, showHour, showMinute, showSecound);
+  
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
   return (
     <div>
@@ -18,9 +23,7 @@ export default function CampaignCountDown({
               data-aos="fade-right"
               className="campaign-countdown lg:w-1/2 h-full w-full mb-5 lg:mb-0"
               style={{
-                background: `url(${
-                  import.meta.env.VITE_PUBLIC_URL
-                }/assets/images/campaign-cover-countdown.jpg) no-repeat`,
+                background:  `url(${apiUrl}/imagenes/imagen/campo_paneles.jpg) no-repeat center`,
                 backgroundSize: "cover",
               }}
             >
@@ -178,3 +181,21 @@ export default function CampaignCountDown({
     </div>
   );
 }
+
+// Validación de las props
+CampaignCountDown.propTypes = {
+  className: PropTypes.string,
+  lastDate: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.string,
+  ]),
+  counterbg: PropTypes.string,
+  appscreen: PropTypes.bool,
+};
+
+// // Valores predeterminados para las props opcionales
+// CampaignCountDown.defaultProps = {
+//   className: '',
+//   counterbg: '',
+//   appscreen: false,
+// };

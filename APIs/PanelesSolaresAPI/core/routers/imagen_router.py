@@ -71,7 +71,6 @@ def subir_imagen(imagen: Imagen_crear):
     return imagen_creada
     # return response.json()
 
-
 @router_imagen.delete('/eliminar/{imagen_id}')
 def eliminar_imagen_por_id(imagen_id: int):
     

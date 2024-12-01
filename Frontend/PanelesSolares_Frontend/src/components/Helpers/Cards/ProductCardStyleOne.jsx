@@ -12,7 +12,6 @@ export default function ProductCardStyleOne({ datas, type }) {
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *
     100;
-    console.log(datas);
     
   return (
     <div
@@ -22,7 +21,8 @@ export default function ProductCardStyleOne({ datas, type }) {
       <div
         className="product-card-img w-full h-[300px]"
         style={{
-          background: `url(${apiUrl}/categorias/imagen/${datas.image}) no-repeat center`,
+          background: `url(${apiUrl}/imagenes/imagen/${datas.image}) no-repeat center`,
+          backgroundSize: 'contain',
         }}
       >
         {/* product available progress */}

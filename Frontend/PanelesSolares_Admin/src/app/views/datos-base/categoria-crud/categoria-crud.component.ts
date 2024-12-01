@@ -125,8 +125,6 @@ export class CategoriaCRUDComponent implements OnInit {
         this.categorias = response;
         this.categorias = [...this.categorias];
         this.permisosAcciones();
-        console.log(this.categorias);
-        
       },
       (error) => {
         console.log(error);

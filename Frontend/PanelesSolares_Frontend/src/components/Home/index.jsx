@@ -57,7 +57,9 @@ export default function Home() {
         }
     
         const data = await response.json();
-        setProductosMRelevantes(data);
+        const filteredData = data.filter(item => item.imagen_url !== null);
+        
+        setProductosMRelevantes(filteredData);
       } catch (error) {
         console.error('Error al cargar el producto:', error);
       }
@@ -75,8 +77,6 @@ export default function Home() {
   });
 
   function combinarDatos(data1, data2) {
-    // Reorganizamos los datos del primer conjunto
-    // console.log(data1, data2);
     let i = 0;
     const productos1 = data1.map(producto => ({
         id: producto.producto_id,
@@ -95,8 +95,8 @@ export default function Home() {
     }));
     return productos1;
   }
+
   productosRelevantes = combinarDatos(productosMRelevantes, datas);
-  // console.log(productosRelevantes);
 
   // const [ads, setAds] = useState(false);
   // const adsHandle = () => {
@@ -128,7 +128,7 @@ export default function Home() {
         />
         <CampaignCountDown
           className="mb-[60px]"
-          lastDate="2023-10-04 4:00:00"
+          lastDate="2024-12-04 4:12:23"
         />
         <ViewMoreTitle
           className="top-selling-product mb-[60px]"
