@@ -128,12 +128,12 @@ export default function Home() {
         />
         <CampaignCountDown
           className="mb-[60px]"
-          lastDate="2024-12-04 4:12:23"
+          lastDate="2024-12-31 24:00:00"
         />
         <ViewMoreTitle
           className="top-selling-product mb-[60px]"
           seeMoreUrl="/all-products"
-          categoryTitle="Top Selling Products"
+          categoryTitle="Prouctos mas vendidos"
         >
           <SectionStyleTwo products={products.slice(3, products.length)} />
         </ViewMoreTitle>

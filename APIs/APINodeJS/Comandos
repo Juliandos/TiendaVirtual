@@ -5,6 +5,9 @@
 - npm init -y
 - npm install -g typescript
 - npm i sequelize sequelize-cli
+- npm install -g sequelize-auto-migrations
+- npm i sequelize-auto 
+- npm install --global mysql2
 - npm i mysql2 cors express nodemon sequelize-auto
 - sequelize-auto -o "./models" -d panelessolares -u root -h localhost -e mysql
 - npm install typescript @types/express @types/mysql

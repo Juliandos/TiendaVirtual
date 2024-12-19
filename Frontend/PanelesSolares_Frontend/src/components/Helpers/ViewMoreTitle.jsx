@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export default function ViewMoreTitle({
   categoryTitle = "",
@@ -47,3 +48,10 @@ export default function ViewMoreTitle({
   );
 }
 
+// Validación de props
+ViewMoreTitle.propTypes = {
+  categoryTitle: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node,
+  seeMoreUrl: PropTypes.string,
+};
