@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import Compair from "../icons/Compair";
 import QuickViewIco from "../icons/QuickViewIco";
 import Star from "../icons/Star";
+import PropTypes from "prop-types";
 import ThinLove from "../icons/ThinLove";
 
 export default function ProductCardRowStyleTwo({ className, datas, type }) {
-  
+  // console.log(datas);
   return (
     <div
       data-aos="fade-left"
@@ -16,9 +17,7 @@ export default function ProductCardRowStyleTwo({ className, datas, type }) {
       <div className="flex space-x-5 items-center w-full h-full lg:p-[30px] sm:p-5 p-2">
         <div className="lg:w-1/2 w-1/3 h-full">
           <img
-            src={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
-              datas.image
-            }`}
+            src={`http://127.0.0.1:8000/imagenes/imagen/${datas.image}`}
             alt=""
             className="w-full h-full object-contain"
           />
@@ -76,3 +75,12 @@ export default function ProductCardRowStyleTwo({ className, datas, type }) {
     </div>
   );
 }
+
+ProductCardRowStyleTwo.propTypes = {
+  className: PropTypes.string,
+  datas: PropTypes.oneOfType([
+      PropTypes.array, // Permite arrays
+      PropTypes.object, // Permite objetos
+    ]).isRequired,
+  type: PropTypes.string,
+};

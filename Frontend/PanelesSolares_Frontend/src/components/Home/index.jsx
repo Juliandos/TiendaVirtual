@@ -57,9 +57,9 @@ export default function Home() {
         }
     
         const data = await response.json();
-        const filteredData = data.filter(item => item.imagen_url !== null);
+        // const filteredData = data.filter(item => item.imagen_url !== null);
         
-        setProductosMRelevantes(filteredData);
+        setProductosMRelevantes(data);
       } catch (error) {
         console.error('Error al cargar el producto:', error);
       }
@@ -77,27 +77,35 @@ export default function Home() {
   });
 
   function combinarDatos(data1, data2) {
-    let i = 0;
-    const productos1 = data1.map(producto => ({
-        id: producto.producto_id,
-        title: producto.producto_nombre,
-        referencia: producto.referencia,
-        descripcion: producto.descripcion,
-        brand: producto.marca,
-        cam_product_sale: producto.cantidad_minima,
-        cam_product_available: producto.cantidad_actual,
-        precio_compra: producto.precio_compra,
-        price: producto.precio_venta,
-        image: producto.imagen_url,
-        review: data2.products[i].review,
-        offer_price: data2.products[i].offer_price,
-        product_type: data2.products[i].product_type
-    }));
+    let i = 0; // Inicializamos el contador
+
+    const productos1 = data1.map(producto => {
+        const resultado = {
+            id: producto.producto_id,
+            title: producto.producto_nombre,
+            referencia: producto.referencia,
+            descripcion: producto.descripcion,
+            brand: producto.marca,
+            cam_product_sale: producto.cantidad_minima,
+            cam_product_available: producto.cantidad_actual,
+            precio_compra: producto.precio_compra,
+            price: producto.precio_venta,
+            image: producto.imagen_url,
+            review: data2.products[i].review,
+            offer_price: data2.products[i].offer_price,
+            product_type: data2.products[i].product_type
+        };
+        i++;
+        return resultado;
+    });
+
     return productos1;
-  }
+}
 
   productosRelevantes = combinarDatos(productosMRelevantes, datas);
 
+  // console.log(productosRelevantes);
+  
   // const [ads, setAds] = useState(false);
   // const adsHandle = () => {
   //   setAds(false);
@@ -135,7 +143,7 @@ export default function Home() {
           seeMoreUrl="/all-products"
           categoryTitle="Prouctos mas vendidos"
         >
-          <SectionStyleTwo products={products.slice(3, products.length)} />
+          <SectionStyleTwo products={productosRelevantes} />
         </ViewMoreTitle>
         <ViewMoreTitle
           className="best-sallers-section mb-[60px]"

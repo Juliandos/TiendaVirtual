@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function ProductCardStyleOne({ datas, type }) {
+  // console.log(datas);
   const available =
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *

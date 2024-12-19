@@ -81,30 +81,30 @@ router.post("/producto", async (req: Request, res: Response) => {
 
     const query = `
       SELECT 
-    p.id AS producto_id,
-    p.nombre AS producto_nombre,
-    p.referencia,
-    p.descripcion,
-    p.marca,
-    p.cantidad_minima,
-    p.cantidad_actual,
-    p.precio_compra,
-    p.precio_venta,
-    i.nombre AS imagen_nombre,
-    i.url AS imagen_url
-FROM producto p
-LEFT JOIN (
-    SELECT 
-        producto_id,
-        nombre,
-        url
-    FROM imagen
-    WHERE id = (
-        SELECT MIN(id)
-        FROM imagen i2
-        WHERE i2.producto_id = imagen.producto_id
-    )
-) i ON p.id = i.producto_id
+        p.id AS producto_id,
+        p.nombre AS producto_nombre,
+        p.referencia,
+        p.descripcion,
+        p.marca,
+        p.cantidad_minima,
+        p.cantidad_actual,
+        p.precio_compra,
+        p.precio_venta,
+        i.nombre AS imagen_nombre,
+        i.url AS imagen_url
+    FROM producto p
+    LEFT JOIN (
+        SELECT 
+            producto_id,
+            nombre,
+            url
+        FROM imagen
+        WHERE id = (
+            SELECT MIN(id)
+            FROM imagen i2
+            WHERE i2.producto_id = imagen.producto_id
+        )
+    ) i ON p.id = i.producto_id
     `;
 
     // Obtener instancia de Sequelize
