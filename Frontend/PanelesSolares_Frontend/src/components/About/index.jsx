@@ -10,6 +10,7 @@ import blog from "../../data/blogs.json";
 import DataIteration from "../Helpers/DataIteration";
 
 export default function About() {
+  console.log(blog);
   const settings = {
     slidesToShow: 3,
     slidesToScroll: 3,
