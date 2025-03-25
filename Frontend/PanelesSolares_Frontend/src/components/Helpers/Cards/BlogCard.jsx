@@ -1,30 +1,8 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useState, useEffect } from 'react';
-const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function BlogCard({ className, datas }) {
 
-  const [blogs, setBlogs] = useState([]);
-
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/publicaciones/todas`);
-        const data = await response.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    };
-    fetchBlogs();
-  }, []);
-
-  if (!blogs.length) {
-    return null; // No renderiza nada hasta tener datos (igual que en tu Banner)
-  }
-
-  console.log(blogs, datas);
   return (
     <div
       className={`blog-card-wrapper w-full border border-[#D3D3D3] ${
@@ -34,7 +12,7 @@ export default function BlogCard({ className, datas }) {
       <div className="img w-full h-[340px]">
         <img
           src={`${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
-            blogs.portada
+            datas.portada
           }`}
           alt="blog"
           className="w-full h-full object-cover"
@@ -58,7 +36,7 @@ export default function BlogCard({ className, datas }) {
               </svg>
             </span>
             <span className="text-base text-qgraytwo capitalize">
-              By {datas.by}
+              By Admin
             </span>
           </div>
           <div className="flex space-x-1.5 items-center">
@@ -85,18 +63,18 @@ export default function BlogCard({ className, datas }) {
               </svg>
             </span>
             <span className="text-base text-qgraytwo">
-              {datas.comments_length} Comments
+              Comments
             </span>
           </div>
         </div>
         <div className="details">
           <Link to="/blogs/blog">
             <h1 className="text-[22px] text-qblack hover:text-blue-500 font-semibold line-clamp-2 mb-1 capitalize">
-              {datas.title}
+              {datas.titulo}
             </h1>
           </Link>
           <p className="text-qgraytwo text-[15px] leading-[30px] line-clamp-2 mb-3">
-            {datas.article}
+            {datas.contenido}
           </p>
           {/* view more btn */}
           <a href="#">
@@ -132,5 +110,8 @@ export default function BlogCard({ className, datas }) {
 
 BlogCard.propTypes = {
   className: PropTypes.string,
-  datas: PropTypes.object.isRequired
+  datas: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object,
+      ]).isRequired,
 };

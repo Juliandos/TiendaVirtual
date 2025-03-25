@@ -10,7 +10,6 @@ import blog from "../../data/blogs.json";
 import DataIteration from "../Helpers/DataIteration";
 
 export default function About() {
-  console.log(blog);
   const settings = {
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -61,7 +60,6 @@ export default function About() {
             ]}
           />
         </div>
-
         <div className="aboutus-wrapper w-full">
           <div className="container-x mx-auto">
             <div className="w-full min-h-[665px] lg:flex lg:space-x-12 items-center pb-10 lg:pb-0">
@@ -108,7 +106,6 @@ export default function About() {
             </div>
           </div>
         </div>
-
         <div className="customer-feedback w-full bg-white py-[60px]">
           <div className="title flex justify-center mb-5">
             <h1 className="text-[30px] font-semibold text-qblack">
@@ -718,7 +715,6 @@ export default function About() {
             </div>
           </div>
         </div>
-
         <div className="blog-post-wrapper w-full mb-[30px]">
           <div className="container-x mx-auto">
             <div className="blog-post-title flex justify-center items-cente mb-[30px]">

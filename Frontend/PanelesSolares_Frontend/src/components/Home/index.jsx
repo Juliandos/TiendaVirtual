@@ -45,11 +45,11 @@ export default function Home() {
     const fetchProductosMarcasRelevantes = async (productoId) => {
       try {
         const response = await fetch(`${apiUrl}/productos/producto`, {
-          method: 'POST', // Cambiamos a POST
+          method: 'POST',
           headers: {
-            'Content-Type': 'application/json', // Indicamos que el cuerpo es JSON
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ producto_id: productoId }), // Enviamos el cuerpo de la solicitud
+          body: JSON.stringify({ producto_id: productoId }),
         });
     
         if (!response.ok) {
@@ -57,8 +57,6 @@ export default function Home() {
         }
     
         const data = await response.json();
-        // const filteredData = data.filter(item => item.imagen_url !== null);
-        
         setProductosMRelevantes(data);
       } catch (error) {
         console.error('Error al cargar el producto:', error);
@@ -77,7 +75,7 @@ export default function Home() {
   });
 
   function combinarDatos(data1, data2) {
-    let i = 0; // Inicializamos el contador
+    let i = 0;
 
     const productos1 = data1.map(producto => {
         const resultado = {
@@ -103,8 +101,6 @@ export default function Home() {
 }
 
   productosRelevantes = combinarDatos(productosMRelevantes, datas);
-
-  // console.log(productosRelevantes);
   
   // const [ads, setAds] = useState(false);
   // const adsHandle = () => {

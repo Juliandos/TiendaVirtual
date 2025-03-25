@@ -1,10 +1,30 @@
-import blog from "../../data/blogs.json";
+// import blog from "../../data/blogs.json";
 import BlogCard from "../Helpers/Cards/BlogCard";
 import DataIteration from "../Helpers/DataIteration";
 import PageTitle from "../Helpers/PageTitle";
 import Layout from "../Partials/Layout";
+import { useState, useEffect } from "react";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Blogs() {
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/publicaciones/todas`);
+        const data = await response.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+    fetchBlogs();
+  }, []);
+  console.log(blogs);
+
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="blogs-wrapper w-full-width">
@@ -24,9 +44,9 @@ export default function Blogs() {
           <div className="w-full">
             <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-[30px] gap-5">
               <DataIteration
-                datas={blog.blogs}
+                datas={blogs}
                 startLength={0}
-                endLength={blog.blogs.length}
+                endLength={blogs.length}
               >
                 {({ datas }) => (
                   <div
