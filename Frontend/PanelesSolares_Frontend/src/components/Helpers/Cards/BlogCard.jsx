@@ -68,7 +68,7 @@ export default function BlogCard({ className, datas }) {
           </div>
         </div>
         <div className="details">
-          <Link to="/blogs/blog">
+          <Link to={`/blogs/blog/${datas.id}`}>
             <h1 className="text-[22px] text-qblack hover:text-blue-500 font-semibold line-clamp-2 mb-1 capitalize">
               {datas.titulo}
             </h1>

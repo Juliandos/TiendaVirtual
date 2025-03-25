@@ -23,7 +23,6 @@ export default function Blogs() {
     };
     fetchBlogs();
   }, []);
-  console.log(blogs);
 
   return (
     <Layout childrenClasses="pt-0 pb-0">

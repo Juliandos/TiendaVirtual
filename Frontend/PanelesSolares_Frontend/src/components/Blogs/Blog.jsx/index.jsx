@@ -1,8 +1,27 @@
 import PageTitle from "../../Helpers/PageTitle";
 import Layout from "../../Partials/Layout";
 import CommentBlog from "./CommentBlog";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Blog() {
+
+  const { blogId } = useParams(); // Obtiene el ID de la URL
+  const [blogData, setBlogData] = useState(null);
+
+  useEffect(() => {
+    if (blogId) {
+      fetch(`${apiUrl}/publicaciones/uno/${blogId}`)
+        .then((res) => res.json())
+        .then((data) =>{ setBlogData(data)
+        })
+        .catch((error) => console.error("Error fetching blog:", error));
+    }
+  }, [blogId]);
+  console.log(blogData);
+  
+
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="blog-page-wrapper w-full">
@@ -23,7 +42,7 @@ export default function Blog() {
                   <img
                     src={`${
                       import.meta.env.VITE_PUBLIC_URL
-                    }/assets/images/blog-img-1.jpg`}
+                    }/assets/images/${blogData ? blogData.portada : ''}`}
                     alt="blog"
                     className="w-full h-full object-cover"
                   />
@@ -79,41 +98,10 @@ export default function Blog() {
                   </div>
                   <div className="details">
                     <h1 className="text-[22px] text-qblack font-semibold line-clamp-2 mb-1 capitalize">
-                      Business-to-consumer that involves selling fight into the
-                      find to a products and services
+                      {blogData ? blogData.titulo : ''}
                     </h1>
                     <p className="text-qgraytwo text-[15px] leading-[30px] mb-10">
-                      ten occasional saw everything but conviction. Daughter
-                      returned quitting few are day advanced branched. Do
-                      enjoyment defective objection or we if favourite. At
-                      wonder afford so danger cannot former seeing. Power visit
-                      charm money add heard new other put. Attended no indulged
-                      marriage is to judgment offering landlord. Was drawing
-                      natural fat respect husband. An as noisy an offer drawn
-                      blush place. These tried for way joy wrote witty. In mr
-                      began music weeks after at begin. Education no dejection
-                      so direction pretended household do to. Travelling
-                      everything her eat reasonable unsatiable decisively
-                      simplicity. Morning request be lasting it fortune demands
-                      highest of. Whether article spirits new her covered
-                      hastily sitting her. Money witty books nor son add.
-                      Chicken age had evening believe but proceed pretend mrs.
-                      At missed advice my it no sister. Miss told ham dull knew
-                      see she spot near can.Spirither entire her called.
-                      Acceptance middletons me if discretion boisterous
-                      travelling an. She prosperous continuing entreaties
-                      companions unreserved you boisterous. Middleton sportsmen
-                      sir now cordially ask additions for. You ten occasional
-                      saw everything but conviction. Daughter returned quitting
-                      few are day advanced branched. Do enjoyment defective
-                      objection or we if favourite. At wonder afford so danger
-                      cannot former seeing. Power visit charm money add heard
-                      new other put. Attended no indulged marriage is to
-                      judgment offering landlord. Was drawing natural fat
-                      respect husband. An as noisy an offer drawn blush place.
-                      These tried for way joy wrote witty. In mr began music
-                      weeks after at begin. Education no dejection so direction
-                      pretended household do to.
+                      {blogData ? blogData.contenido : ''}
                     </p>
                   </div>
                 </div>
