@@ -19,8 +19,6 @@ export default function Blog() {
         .catch((error) => console.error("Error fetching blog:", error));
     }
   }, [blogId]);
-  console.log(blogData);
-  
 
   return (
     <Layout childrenClasses="pt-0 pb-0">
@@ -105,7 +103,7 @@ export default function Blog() {
                     </p>
                   </div>
                 </div>
-                <div className="extra-content w-full">
+                {/* <div className="extra-content w-full">
                   <div className="w-full sm:flex sm:space-x-[30px]  mb-3">
                     <div className="sm:w-[370px] h-[235px]">
                       <img
@@ -340,9 +338,9 @@ export default function Blog() {
                       <CommentBlog />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
-              <div className="lg:w-[370px] w-full">
+              {/* <div className="lg:w-[370px] w-full">
                 <div
                   data-aos="fade-up"
                   className="search-widget w-full p-[30px] bg-white mb-[30px]"
@@ -752,7 +750,7 @@ export default function Blog() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
