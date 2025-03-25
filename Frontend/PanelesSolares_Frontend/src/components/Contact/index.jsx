@@ -22,8 +22,7 @@ export default function Contact() {
                 Contact Information
               </h1>
               <p className="text-[15px] text-qgraytwo leading-[30px] mb-5">
-                Fill the form below or write us .We will help you as soon as
-                possible.
+                Fill the form below or write us .We will help you as soon as possible.
               </p>
 
               <div className="xl:flex xl:space-x-[30px] mb-[30px]">
@@ -58,10 +57,10 @@ export default function Contact() {
                     Phone
                   </p>
                   <p className="text-[15px] text-black leading-[30px] text-center">
-                    +(323) 9847 3847 383
+                    +(57) 311 785 70 25
                   </p>
                   <p className="text-[15px] text-black leading-[30px] text-center">
-                    +(434) 5466 5467 443
+                    +(57) 311 624 25 61
                   </p>
                 </div>
                 <div className="xl:w-1/2 w-full h-[196px] flex flex-col item justify-center bg-[#D3EFFF] p-5">
@@ -105,10 +104,10 @@ export default function Contact() {
                     Email
                   </p>
                   <p className="text-[15px] text-black leading-[30px] text-center">
-                    Demoemail@gmail.com
+                    95juliandos@gmail.com
                   </p>
                   <p className="text-[15px] text-black leading-[30px] text-center">
-                    rafiqulislamsuvobd@gmail.com
+                    julian.dos@hotmail.com
                   </p>
                 </div>
               </div>
@@ -143,7 +142,7 @@ export default function Contact() {
                 <div className="w-full h-[206px] mt-5">
                   <iframe
                     title="newWork"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.94539481518!2d-74.26675559025064!3d40.69739290398433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1656755618576!5m2!1sen!2sbd"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6524.706239428594!2d-76.61295945448308!3d2.4394103670758525!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30030ff9207c27%3A0xf76217f9f8464ebe!2sParque%20Caldas!5e1!3m2!1ses!2sco!4v1742941469247!5m2!1ses!2sco"
                     style={{ border: "0", width: "100%", height: "100%" }}
                     allowFullScreen=""
                     loading="lazy"
