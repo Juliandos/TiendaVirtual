@@ -1,7 +1,19 @@
-import InputQuantityCom from "../Helpers/InputQuantityCom";
+// import InputQuantityCom from "../Helpers/InputQuantityCom";
 import PropTypes from "prop-types";
+import { useCart } from '../Contexts/UseCart';
 
 export default function ProductsTable({ className }) {
+
+  const { cartItems } = useCart();
+// , removeFromCart, updateQuantity
+  if (cartItems.length === 0) {
+    return (
+      <div className={`w-full ${className || ""}`}>
+        <p>Your cart is empty</p>
+      </div>
+    );
+  }
+
   return (
     <div className={`w-full ${className || ""}`}>
       <div className="relative w-full overflow-x-auto border border-[#EDEDED]">
@@ -20,7 +32,7 @@ export default function ProductsTable({ className }) {
               <td className="py-4 whitespace-nowrap text-right w-[114px]"></td>
             </tr>
             {/* table heading end */}
-            <tr className="bg-white border-b hover:bg-gray-50">
+            {/* <tr className="bg-white border-b hover:bg-gray-50">
               <td className="pl-10  py-4  w-[380px]">
                 <div className="flex space-x-6 items-center">
                   <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
@@ -209,7 +221,7 @@ assets/images/product-img-3.jpg`}
                   </span>
                 </div>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>
