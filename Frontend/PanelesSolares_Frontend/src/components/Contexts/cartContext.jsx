@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  
+  
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -19,6 +21,7 @@ export function CartProvider({ children }) {
   }, [cartItems]);
 
   const addToCart = (product) => {
+    console.log(product);
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
 

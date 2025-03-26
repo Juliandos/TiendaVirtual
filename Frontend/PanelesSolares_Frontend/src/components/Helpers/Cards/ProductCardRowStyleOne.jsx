@@ -4,8 +4,9 @@ import QuickViewIco from "../icons/QuickViewIco";
 import Star from "../icons/Star";
 import PropTypes from "prop-types";
 import ThinLove from "../icons/ThinLove";
-
+import { useCart } from "../../Contexts/UseCart"
 export default function ProductCardRowStyleTwo({ className, datas, type }) {
+  const { addToCart } = useCart();
   // console.log(datas);
   return (
     <div
@@ -46,7 +47,7 @@ export default function ProductCardRowStyleTwo({ className, datas, type }) {
               </span>
             </p>
             <button type="button" className="w-[110px] h-[30px]">
-              <span className={type === 3 ? "blue-btn" : "yellow-btn"}>
+              <span className={type === 3 ? "blue-btn" : "yellow-btn"} onClick={() => addToCart(datas)}>
                 {" "}
                 Add To Cart
               </span>
