@@ -2,17 +2,22 @@ import PropTypes from "prop-types";
 import { useCart } from "../Contexts/UseCart";
 import InputQuantityCom from "../Helpers/InputQuantityCom";
 
+const apiUrl = import.meta.env.VITE_API_URL
+
 export default function CartItem({ product }) {
   const { removeFromCart, updateQuantity } = useCart();
   const price = parseFloat(product.offer_price.replace('$', ''));
+
+  console.log(product);
+  
+
   return (
     <tr className="bg-white border-b hover:bg-gray-50">
-      {/* Columna: Imagen y nombre del producto */}
       <td className="pl-10 py-4 w-[380px]">
         <div className="flex space-x-6 items-center">
           <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
             <img
-              src={`${import.meta.env.VITE_PUBLIC_URL}/${product.image}`}
+              src={`${apiUrl}/imagenes/imagen/${product.image}`}
               alt={product.title}
               className="w-full h-full object-contain"
             />

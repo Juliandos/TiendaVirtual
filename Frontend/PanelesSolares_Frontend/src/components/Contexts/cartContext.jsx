@@ -6,7 +6,6 @@ export const CartContext = createContext();
 
 export function CartProvider({ children }) {
   
-  // Cargar el carrito desde localStorage al inicio
   const [cartItems, setCartItems] = useState(() => {
     try {
       const savedCart = localStorage.getItem('cart');
@@ -26,7 +25,6 @@ export function CartProvider({ children }) {
   }, []);
   
   useEffect(() => {
-    console.log(cartItems);
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
