@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useCart } from "./Contexts/CartContext";
+import { useCart } from "../Contexts/UseCart";
 import InputQuantityCom from "../Helpers/InputQuantityCom";
 
 export default function CartItem({ product }) {
@@ -13,13 +13,13 @@ export default function CartItem({ product }) {
           <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
             <img
               src={`${import.meta.env.VITE_PUBLIC_URL}${product.image}`}
-              alt={product.name}
+              alt={product.title}
               className="w-full h-full object-contain"
             />
           </div>
           <div className="flex-1 flex flex-col">
             <p className="font-medium text-[15px] text-qblack">
-              {product.name}
+              {product.title}
             </p>
           </div>
         </div>
@@ -30,7 +30,7 @@ export default function CartItem({ product }) {
         <div className="flex justify-center items-center">
           <span
             className="w-[20px] h-[20px] block rounded-full"
-            style={{ backgroundColor: product.color }}
+            style={{ backgroundColor: "black" }}
           ></span>
         </div>
       </td>
@@ -38,7 +38,7 @@ export default function CartItem({ product }) {
       {/* Columna: Tamaño */}
       <td className="text-center py-4 px-2">
         <div className="flex space-x-1 items-center justify-center">
-          <span className="text-[15px] font-normal">{product.size}</span>
+          <span className="text-[15px] font-normal">big</span>
         </div>
       </td>
 
@@ -46,7 +46,7 @@ export default function CartItem({ product }) {
       <td className="text-center py-4 px-2">
         <div className="flex space-x-1 items-center justify-center">
           <span className="text-[15px] font-normal">
-            ${product.price.toFixed(2)}
+            5
           </span>
         </div>
       </td>
@@ -67,7 +67,7 @@ export default function CartItem({ product }) {
       <td className="text-right py-4">
         <div className="flex space-x-1 items-center justify-center">
           <span className="text-[15px] font-normal">
-            ${(product.price * product.quantity).toFixed(2)}
+            5
           </span>
         </div>
       </td>
@@ -98,9 +98,9 @@ export default function CartItem({ product }) {
 CartItem.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    precio_compra: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
     size: PropTypes.string.isRequired,
