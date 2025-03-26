@@ -17,7 +17,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Home() {
   const { products } = datas;
-  // console.log(datas);
   
   const brands = [];
   let margenProductos = 0;

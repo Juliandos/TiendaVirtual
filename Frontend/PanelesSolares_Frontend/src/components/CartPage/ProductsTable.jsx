@@ -1,4 +1,5 @@
 import InputQuantityCom from "../Helpers/InputQuantityCom";
+import PropTypes from "prop-types";
 
 export default function ProductsTable({ className }) {
   return (
@@ -152,7 +153,8 @@ export default function ProductsTable({ className }) {
                     <img
                       src={`${
                         import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-3.jpg`}
+                      }/import { propTypes } from 'propTypes';
+assets/images/product-img-3.jpg`}
                       alt="product"
                       className="w-full h-full object-contain"
                     />
@@ -213,4 +215,8 @@ export default function ProductsTable({ className }) {
       </div>
     </div>
   );
+}
+
+ProductsTable.propTypes = {
+  className: PropTypes.string,
 }

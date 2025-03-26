@@ -5,6 +5,7 @@ import InputCom from "../Helpers/InputCom";
 import PageTitle from "../Helpers/PageTitle";
 import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
+import PropTypes from "prop-types";
 
 export default function CardPage({ cart = true }) {
   return (
@@ -196,3 +197,7 @@ export default function CardPage({ cart = true }) {
     </Layout>
   );
 }
+
+CardPage.propTypes = {
+  cart: PropTypes.bool
+};
