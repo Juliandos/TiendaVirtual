@@ -4,7 +4,7 @@ import InputQuantityCom from "../Helpers/InputQuantityCom";
 
 export default function CartItem({ product }) {
   const { removeFromCart, updateQuantity } = useCart();
-
+  const price = parseFloat(product.offer_price.replace('$', ''));
   return (
     <tr className="bg-white border-b hover:bg-gray-50">
       {/* Columna: Imagen y nombre del producto */}
@@ -12,7 +12,7 @@ export default function CartItem({ product }) {
         <div className="flex space-x-6 items-center">
           <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
             <img
-              src={`${import.meta.env.VITE_PUBLIC_URL}${product.image}`}
+              src={`${import.meta.env.VITE_PUBLIC_URL}/${product.image}`}
               alt={product.title}
               className="w-full h-full object-contain"
             />
@@ -46,7 +46,7 @@ export default function CartItem({ product }) {
       <td className="text-center py-4 px-2">
         <div className="flex space-x-1 items-center justify-center">
           <span className="text-[15px] font-normal">
-            5
+          ${price.toFixed(2)}
           </span>
         </div>
       </td>
@@ -67,7 +67,7 @@ export default function CartItem({ product }) {
       <td className="text-right py-4">
         <div className="flex space-x-1 items-center justify-center">
           <span className="text-[15px] font-normal">
-            5
+          ${(price * product.quantity).toFixed(2)}
           </span>
         </div>
       </td>
@@ -100,7 +100,7 @@ CartItem.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    precio_compra: PropTypes.number.isRequired,
+    offer_price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
     size: PropTypes.string.isRequired,
