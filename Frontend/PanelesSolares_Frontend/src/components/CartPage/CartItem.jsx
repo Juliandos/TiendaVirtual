@@ -5,15 +5,15 @@ import InputQuantityCom from "../Helpers/InputQuantityCom";
 const apiUrl = import.meta.env.VITE_API_URL
 
 export default function CartItem({ product }) {
+
   const { removeFromCart, updateQuantity } = useCart();
   const price = parseFloat(product.offer_price.replace('$', ''));
 
   console.log(product);
   
-
   return (
     <tr className="bg-white border-b hover:bg-gray-50">
-      <td className="pl-10 py-4 w-[380px]">
+      <td className="pl-10 py-4 w-[300px]">
         <div className="flex space-x-6 items-center">
           <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
             <img
@@ -30,13 +30,12 @@ export default function CartItem({ product }) {
         </div>
       </td>
 
-      {/* Columna: Color */}
+      {/* Columna: Marca */}
       <td className="text-center py-4 px-2">
         <div className="flex justify-center items-center">
           <span
             className="w-[20px] h-[20px] block rounded-full"
-            style={{ backgroundColor: "black" }}
-          ></span>
+          >{product.brand}</span>
         </div>
       </td>
 
@@ -102,12 +101,11 @@ export default function CartItem({ product }) {
 
 CartItem.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    offer_price: PropTypes.number.isRequired,
+    offer_price: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
-    color: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
+    brand: PropTypes.string.isRequired,
   }).isRequired,
 };

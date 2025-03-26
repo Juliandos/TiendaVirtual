@@ -27,11 +27,11 @@ export default function ProductsTable({ className }) {
               <td className="py-4 pl-10 block whitespace-nowrap min-w-[300px]">
                 product
               </td>
-              <td className="py-4 whitespace-nowrap text-center">color</td>
+              <td className="py-4 whitespace-nowrap text-center">Marca</td>
               <td className="py-4 whitespace-nowrap text-center">size</td>
               <td className="py-4 whitespace-nowrap text-center">price</td>
-              <td className="py-4 whitespace-nowrap  text-center">quantity</td>
-              <td className="py-4 whitespace-nowrap  text-center">total</td>
+              <td className="py-4 whitespace-nowrap text-center">quantity</td>
+              <td className="py-4 whitespace-nowrap text-center">total</td>
               <td className="py-4 whitespace-nowrap text-right w-[114px]"></td>
             </tr>
             {/* table heading end */}
