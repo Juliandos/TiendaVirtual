@@ -5,9 +5,11 @@ import Star from "../icons/Star";
 import PropTypes from "prop-types";
 import ThinLove from "../icons/ThinLove";
 import { useCart } from "../../Contexts/UseCart"
+
 export default function ProductCardRowStyleTwo({ className, datas, type }) {
+  
   const { addToCart } = useCart();
-  // console.log(datas);
+
   return (
     <div
       data-aos="fade-left"
