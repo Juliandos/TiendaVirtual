@@ -9,11 +9,9 @@ export default function CartItem({ product }) {
   const { removeFromCart, updateQuantity } = useCart();
   const price = parseFloat(product.offer_price.replace('$', ''));
 
-  console.log(product);
-  
   return (
     <tr className="bg-white border-b hover:bg-gray-50">
-      <td className="pl-10 py-4 w-[300px]">
+      <td className="pl-10 py-4 w-[350px]">
         <div className="flex space-x-6 items-center">
           <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
             <img
@@ -36,13 +34,6 @@ export default function CartItem({ product }) {
           <span
             className="w-[20px] h-[20px] block rounded-full"
           >{product.brand}</span>
-        </div>
-      </td>
-
-      {/* Columna: Tamaño */}
-      <td className="text-center py-4 px-2">
-        <div className="flex space-x-1 items-center justify-center">
-          <span className="text-[15px] font-normal">big</span>
         </div>
       </td>
 
@@ -106,6 +97,6 @@ CartItem.propTypes = {
     image: PropTypes.string.isRequired,
     offer_price: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
-    brand: PropTypes.string.isRequired,
+    brand: PropTypes.string.isRequired
   }).isRequired,
 };

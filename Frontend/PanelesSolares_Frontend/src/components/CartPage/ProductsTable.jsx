@@ -28,7 +28,6 @@ export default function ProductsTable({ className }) {
                 product
               </td>
               <td className="py-4 whitespace-nowrap text-center">Marca</td>
-              <td className="py-4 whitespace-nowrap text-center">size</td>
               <td className="py-4 whitespace-nowrap text-center">price</td>
               <td className="py-4 whitespace-nowrap text-center">quantity</td>
               <td className="py-4 whitespace-nowrap text-center">total</td>
