@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import datas from "../../../data/products.json";
 import BreadcrumbCom from "../../BreadcrumbCom";
 import Layout from "../../Partials/Layout";
@@ -24,10 +25,13 @@ import SupportTab from "./tabs/SupportTab";
 import WishlistTab from "./tabs/WishlistTab";
 
 export default function Profile() {
+
+  const navigate = useNavigate();
   const [switchDashboard, setSwitchDashboard] = useState(false);
   const location = useLocation();
   const getHashContent = location.hash.split("#");
   const [active, setActive] = useState("dashboard");
+
   useEffect(() => {
     setActive(
       getHashContent && getHashContent.length > 1
@@ -35,6 +39,16 @@ export default function Profile() {
         : "dashboard"
     );
   }, [getHashContent]);
+
+  const logout = () =>{
+    // Limpiar localStorage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('logged');
+    localStorage.removeItem('persona_email');
+    localStorage.removeItem('cart');
+    navigate('/login');
+  }
+
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="profile-page-wrapper w-full">
@@ -182,8 +196,8 @@ export default function Profile() {
                           <span>
                             <IcoLogout />
                           </span>
-                          <span className=" font-normal text-base">
-                            Logoout
+                          <span className=" font-normal text-base" onClick={logout}>
+                            cerrar sesión
                           </span>
                         </div>
                       </Link>

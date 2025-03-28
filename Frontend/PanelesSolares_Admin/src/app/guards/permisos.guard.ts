@@ -14,6 +14,7 @@ export const permisosGuard: CanActivateFn = (route: ActivatedRouteSnapshot): Obs
   
   return solicitud.obtenerPermisos(modulo ? modulo : '', email ? email : '').pipe(
     map((response: any) => {
+      console.log(response);
       const permiso: boolean = !!response.r; //  convierte el valor de response.someCondition a su equivalente booleano.
       return permiso;
     }),
