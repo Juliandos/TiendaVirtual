@@ -6,7 +6,7 @@ function InputCom({
   name,
   placeholder,
   children,
-  onChange,  // Cambiado de inputHandler a onChange
+  onChange,
   value,
   inputClasses,
   labelClasses = "text-qgray text-[13px] font-normal",

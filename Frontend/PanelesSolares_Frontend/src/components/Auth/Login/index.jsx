@@ -111,7 +111,7 @@ export default function Login() {
                     <div className="input-item mb-5">
                       <InputCom
                         placeholder="example@example.com"
-                        label="Email Address*"
+                        label="Email*"
                         name="username"
                         type="email"
                         inputClasses="h-[50px]"
@@ -123,7 +123,7 @@ export default function Login() {
                     <div className="input-item mb-5">
                       <InputCom
                         placeholder="● ● ● ● ● ●"
-                        label="Password*"
+                        label="Contraseña*"
                         name="password"
                         type="password"
                         inputClasses="h-[50px]"
