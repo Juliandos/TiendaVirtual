@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
 
 export default function Dashboard({persona}) {
+
+  console.log(persona);
+
   return (
     <>
       <div className="welcome-msg w-full">
         <div>
-          <p className="text-qblack text-lg">Hello, Shovo</p>
+          {/* <p className="text-qblack text-lg">Hello, {persona.nombre?.split(" ")[0] || "Usuario"}</p> */}
           <h1 className="font-bold text-[24px] text-qblack">
             Welcome to your Profile
           </h1>
@@ -40,7 +43,7 @@ export default function Dashboard({persona}) {
           <p className="text-xl text-white group-hover:text-qblacktext mt-5">
             New Orders
           </p>
-          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block">
+          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block ml-3">
             656
           </span>
         </div>
@@ -64,7 +67,7 @@ export default function Dashboard({persona}) {
           <p className="text-xl text-white group-hover:text-qblacktext mt-5">
             New Orders
           </p>
-          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block">
+          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block ml-3">
             656
           </span>
         </div>
@@ -96,7 +99,7 @@ export default function Dashboard({persona}) {
           <p className="text-xl text-white group-hover:text-qblacktext mt-5">
             New Orders
           </p>
-          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block">
+          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block ml-3">
             656
           </span>
         </div>
@@ -110,54 +113,54 @@ export default function Dashboard({persona}) {
             <table>
               <tbody>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block">
+                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
                     <div>Name:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    Shuvo khan
+                    {/* {persona.nombre} */}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block">
+                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
                     <div>Email:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    rafiqulislamsuvobd@gmail.com
+                    {/* {persona.email} */}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block">
+                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
                     <div>Phone:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    01792166627
+                    {/* {persona.telefono} */}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block">
-                    <div>City:</div>
+                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                    <div>Status:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    Dhaka,Bangladesh
+                    {/* {persona.status ? 'Activo' : 'Inactivo'} */}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block">
-                    <div>Zip:</div>
+                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                    <div>Dirección:</div>
                   </td>
-                  <td className="text-base text-qblack font-medium">4040</td>
+                  {/* <td className="text-base text-qblack font-medium">{persona.direccion}</td> */}
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div className="w-[1px] h-[164px] bg-[#E4E4E4]"></div>
+        {/* <div className="w-[1px] h-[164px] bg-[#E4E4E4]"></div>
         <div className="ml-6">
           <p className="title text-[22px] font-semibold">Shop Info</p>
           <div className="mt-5">
             <table>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block">
+                <td className="text-base text-qgraytwo w-[100px] block ml-3">
                   <div>Name:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -165,7 +168,7 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block">
+                <td className="text-base text-qgraytwo w-[100px] block ml-3">
                   <div>Email:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -173,7 +176,7 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block">
+                <td className="text-base text-qgraytwo w-[100px] block ml-3">
                   <div>Phone:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -181,27 +184,27 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block">
-                  <div>City:</div>
+                <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                  <div>Status:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
-                  Dhaka,Bangladesh
+                  {persona.status ? 'Activo' : 'Inactivo'}
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block">
+                <td className="text-base text-qgraytwo w-[100px] block ml-3">
                   <div>Zip:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">4040</td>
               </tr>
             </table>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
 }
 
 Dashboard.propTypes = {
-  persona: PropTypes.object,
-}
+  persona: PropTypes.object.isRequired
+};
