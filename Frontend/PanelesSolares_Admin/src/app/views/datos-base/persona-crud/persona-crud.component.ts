@@ -8,7 +8,7 @@ import {
   DatatableComponent
 } from '@swimlane/ngx-datatable';
 import { Router } from '@angular/router';
-import { Permiso } from 'src/app/models/Permiso.enum';
+import { Permiso } from '../../../models/Permiso.enum';
 
 @Component({
   selector: 'app-persona-crud',

@@ -1,6 +1,6 @@
-import React from "react";
+import PropTypes from "prop-types";
 
-export default function Dashboard() {
+export default function Dashboard({persona}) {
   return (
     <>
       <div className="welcome-msg w-full">
@@ -200,4 +200,8 @@ export default function Dashboard() {
       </div>
     </>
   );
+}
+
+Dashboard.propTypes = {
+  persona: PropTypes.object,
 }

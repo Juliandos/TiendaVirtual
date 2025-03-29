@@ -31,6 +31,19 @@ export default function Profile() {
   const location = useLocation();
   const getHashContent = location.hash.split("#");
   const [active, setActive] = useState("dashboard");
+  const [email, setEmail] = useState("dashboard");
+  const email_persona = localStorage.getItem('persona_email')
+
+  //Dame un useEffect para traer la información de este link "http://127.0.0.1:8000/personas/una/' + email" donde email esta guardado el localStorage como persona_email con fetch
+  // Para que funcione, el endpoint en el backend debe estar habilitado para permitir peticiones desde el frontend
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/personas/una/${email_persona}`)
+    .then(response => response.json())
+    .then(data => {
+      setEmail(data);
+    })
+    .catch(error => console.error('Error:', error));
+  });
 
   useEffect(() => {
     setActive(
@@ -207,7 +220,7 @@ export default function Profile() {
                 <div className="flex-1">
                   <div className="item-body dashboard-wrapper w-full">
                     {active === "dashboard" ? (
-                      <Dashboard />
+                      <Dashboard persona = { email } />
                     ) : active === "profile" ? (
                       <>
                         <ProfileTab />
