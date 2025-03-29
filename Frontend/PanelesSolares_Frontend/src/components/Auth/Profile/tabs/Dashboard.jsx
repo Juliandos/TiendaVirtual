@@ -2,13 +2,11 @@ import PropTypes from "prop-types";
 
 export default function Dashboard({persona}) {
 
-  console.log(persona);
-
   return (
     <>
       <div className="welcome-msg w-full">
         <div>
-          {/* <p className="text-qblack text-lg">Hello, {persona.nombre?.split(" ")[0] || "Usuario"}</p> */}
+          <p className="text-qblack text-lg">Hello, {persona.nombre?.split(" ")[0] || "Usuario"}</p>
           <h1 className="font-bold text-[24px] text-qblack">
             Welcome to your Profile
           </h1>
@@ -43,7 +41,7 @@ export default function Dashboard({persona}) {
           <p className="text-xl text-white group-hover:text-qblacktext mt-5">
             New Orders
           </p>
-          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block ml-3">
+          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block mx-3">
             656
           </span>
         </div>
@@ -67,7 +65,7 @@ export default function Dashboard({persona}) {
           <p className="text-xl text-white group-hover:text-qblacktext mt-5">
             New Orders
           </p>
-          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block ml-3">
+          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block mx-3">
             656
           </span>
         </div>
@@ -99,7 +97,7 @@ export default function Dashboard({persona}) {
           <p className="text-xl text-white group-hover:text-qblacktext mt-5">
             New Orders
           </p>
-          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block ml-3">
+          <span className="text-[40px] text-white group-hover:text-qblacktext font-bold leading-none mt-1 block mx-3">
             656
           </span>
         </div>
@@ -113,42 +111,42 @@ export default function Dashboard({persona}) {
             <table>
               <tbody>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                  <td className="text-base text-qgraytwo  block mx-3">
                     <div>Name:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    {/* {persona.nombre} */}
+                    {persona.nombre}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                  <td className="text-base text-qgraytwo  block mx-3">
                     <div>Email:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    {/* {persona.email} */}
+                    {persona.email}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                  <td className="text-base text-qgraytwo  block mx-3">
                     <div>Phone:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    {/* {persona.telefono} */}
+                    {persona.telefono}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                  <td className="text-base text-qgraytwo  block mx-3">
                     <div>Status:</div>
                   </td>
                   <td className="text-base text-qblack font-medium">
-                    {/* {persona.status ? 'Activo' : 'Inactivo'} */}
+                    {persona.status ? 'Activo' : 'Inactivo'}
                   </td>
                 </tr>
                 <tr className="inline-flex mb-5">
-                  <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                  <td className="text-base text-qgraytwo  block mx-3">
                     <div>Dirección:</div>
                   </td>
-                  {/* <td className="text-base text-qblack font-medium">{persona.direccion}</td> */}
+                  <td className="text-base text-qblack font-medium">{persona.direccion}</td>
                 </tr>
               </tbody>
             </table>
@@ -160,7 +158,7 @@ export default function Dashboard({persona}) {
           <div className="mt-5">
             <table>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                <td className="text-base text-qgraytwo  block mx-3">
                   <div>Name:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -168,7 +166,7 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                <td className="text-base text-qgraytwo  block mx-3">
                   <div>Email:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -176,7 +174,7 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                <td className="text-base text-qgraytwo  block mx-3">
                   <div>Phone:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -184,7 +182,7 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                <td className="text-base text-qgraytwo  block mx-3">
                   <div>Status:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">
@@ -192,7 +190,7 @@ export default function Dashboard({persona}) {
                 </td>
               </tr>
               <tr className="inline-flex mb-5">
-                <td className="text-base text-qgraytwo w-[100px] block ml-3">
+                <td className="text-base text-qgraytwo  block mx-3">
                   <div>Zip:</div>
                 </td>
                 <td className="text-base text-qblack font-medium">4040</td>

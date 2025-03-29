@@ -31,14 +31,17 @@ export default function Profile() {
   const location = useLocation();
   const getHashContent = location.hash.split("#");
   const [active, setActive] = useState("dashboard");
-  const [persona, setPersona] = useState(null);
+  const [persona, setPersona] = useState({});
   const email_persona = localStorage.getItem('persona_email')
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/personas/una/${email_persona}`)
-    .then(response => response.json())
+    .then(response => {
+      // if (!response.ok) throw new Error("Error en la respuesta");
+      return response.json();
+    })
     .then(data => {
-      setPersona(data !== null ? data : null);
+      setPersona(data);
     })
     .catch(error => console.error('Error:', error));
   }, []);
