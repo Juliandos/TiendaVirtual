@@ -32,3 +32,5 @@ Si no funciona una instalación de npm haceresto
 # Copiar código
 # npx install ngx-icon-picker
 # Si ninguna de estas soluciones resuelve el problema, por favor proporciona más detalles sobre tu configuración actual y las versiones de Angular, Node.js y npm que estás utilizando, para poder ofrecerte una asistencia más específica.
+
+# npm install react-hook-form --force, puede que haya un error en el formulario de actualización del usuario
