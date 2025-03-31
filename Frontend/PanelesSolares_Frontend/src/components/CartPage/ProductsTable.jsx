@@ -6,8 +6,6 @@ import CartItem from "./CartItem";
 export default function ProductsTable({ className }) {
 
   const { cartItems } = useCart();
-// , removeFromCart, updateQuantity
-  console.log(cartItems);
 
   if (cartItems.length === 0) {
     return (
