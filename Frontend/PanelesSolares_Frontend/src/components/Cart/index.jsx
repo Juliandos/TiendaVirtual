@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Cart({ className, type }) {
   return (
     <>
@@ -263,4 +265,9 @@ export default function Cart({ className, type }) {
       </div>
     </>
   );
+}
+
+Cart.propTypes = {
+  className: PropTypes.string,
+  type: PropTypes.number
 }

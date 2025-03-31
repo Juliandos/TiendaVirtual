@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function ThinBag({ className }) {
   return (
     <svg
@@ -14,4 +16,8 @@ export default function ThinBag({ className }) {
       />
     </svg>
   );
+}
+
+ThinBag.propTypes = {
+  className: PropTypes.string
 }
