@@ -224,7 +224,11 @@ export default function Profile() {
                       <Dashboard persona = { persona } />
                     ) : active === "profile" ? (
                       <>
-                        <ProfileTab />
+                        {persona ? (
+                          <ProfileTab persona={persona} />
+                        ) : (
+                          <div>Cargando datos del perfil...</div>
+                        )}
                       </>
                     ) : active === "payment" ? (
                       <>

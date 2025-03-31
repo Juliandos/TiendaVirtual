@@ -1,49 +1,102 @@
 import { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
 
-const FormularioActualizacionPersona = ({ persona, onUpdate }) => {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-  const [errorRepetido, setErrorRepetido] = useState(false);
+const FormularioActualizacionPersona = ({ persona }) => {
+    
+  const [formData, setFormData] = useState({
+    id: '',
+    nombre: '',
+    telefono: '',
+    email: '',
+    contrasena: '',
+    salario: '',
+    direccion: '',
+    token: '',
+    status: ''
+  });
   const [mensajeExito, setMensajeExito] = useState('');
   const [cargando, setCargando] = useState(false);
+  const [errors, setErrors] = useState({});
 
   // Rellenar formulario con datos existentes al cargar
   useEffect(() => {
     if (persona) {
-      Object.keys(persona).forEach(key => {
-        setValue(key, persona[key]);
+      setFormData({
+        id: persona.id || '',
+        nombre: persona.nombre || '',
+        telefono: persona.telefono || '',
+        email: persona.email || '',
+        contrasena: persona.contrasena || '',
+        salario: persona.salario || '',
+        direccion: persona.direccion || '',
+        token: persona.token || '',
+        status: persona.status || ''
       });
     }
-  }, [persona, setValue]);
+  }, [persona]);
 
-  const onSubmit = async (data) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Limpiar errores al escribir
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: null
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.nombre.trim()) {
+      newErrors.nombre = 'Este campo es requerido';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Este campo es requerido';
+    } else if (!/^\S+@\S+$/i.test(formData.email)) {
+      newErrors.email = 'Ingrese un email válido';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
     setCargando(true);
-    setErrorRepetido(false);
     setMensajeExito('');
     
     try {
-      // // Verificar si el nombre ya existe (excepto para el mismo usuario)
-      // const response = await axios.get(`http://127.0.0.1:8000/personas/verificar-nombre/${data.nombre}`);
-      
-      // if (response.data.existe && response.data.id !== persona.id) {
-      //   setErrorRepetido(true);
-      //   setTimeout(() => setErrorRepetido(false), 3000);
-      //   return;
-      // }
-
-      // Actualizar los datos
-      const updateResponse = await axios.put('http://127.0.0.1:8000/personas/actualizar', data);
+      const updateResponse = await fetch('http://127.0.0.1:8000/personas/actualizar', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+    
+      if (!updateResponse.ok) {
+        const errorData = await updateResponse.json();
+        throw new Error(errorData.message || 'Error al actualizar los datos');
+      }
+    
+      await updateResponse.json();
       
       setMensajeExito('Datos actualizados correctamente');
       setTimeout(() => setMensajeExito(''), 3000);
-      
-      if (onUpdate) {
-        onUpdate(updateResponse.data);
-      }
+    
     } catch (error) {
-      console.error('Error al actualizar:', error);
+      console.error('Error:', error);
     } finally {
       setCargando(false);
     }
@@ -51,13 +104,7 @@ const FormularioActualizacionPersona = ({ persona, onUpdate }) => {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Actualizar Datos</h2>
-      
-      {errorRepetido && (
-        <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
-          ¡El nombre ya está en uso por otro usuario!
-        </div>
-      )}
+      <h2 className="text-2xl font-bold mb-6">Update Profile</h2>
       
       {mensajeExito && (
         <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
@@ -65,45 +112,47 @@ const FormularioActualizacionPersona = ({ persona, onUpdate }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Nombre:</label>
           <input
-            {...register('nombre', { required: 'Este campo es requerido' })}
-            className="w-full p-2 border rounded"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.nombre && <p className="text-red-500 text-sm">{errors.nombre.message}</p>}
+          {errors.nombre && <p className="text-red-500 text-sm mt-1">{errors.nombre}</p>}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Teléfono:</label>
           <input
-            {...register('telefono')}
-            className="w-full p-2 border rounded"
+            name="telefono"
+            value={formData.telefono}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Email:</label>
           <input
-            {...register('email', { 
-              required: 'Este campo es requerido',
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: 'Ingrese un email válido'
-              }
-            })}
-            className="w-full p-2 border rounded"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Contraseña:</label>
           <input
             type="password"
-            {...register('contrasena')}
-            className="w-full p-2 border rounded"
+            name="contrasena"
+            value={formData.contrasena}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -111,29 +160,41 @@ const FormularioActualizacionPersona = ({ persona, onUpdate }) => {
           <label className="block text-gray-700 mb-2">Salario:</label>
           <input
             type="number"
-            {...register('salario')}
-            className="w-full p-2 border rounded"
+            name="salario"
+            value={formData.salario}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Dirección:</label>
           <input
-            {...register('direccion')}
-            className="w-full p-2 border rounded"
+            name="direccion"
+            value={formData.direccion}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <input type="hidden" {...register('id')} />
-        <input type="hidden" {...register('token')} />
-        <input type="hidden" {...register('status')} />
+        <input type="hidden" name="id" value={formData.id} />
+        <input type="hidden" name="token" value={formData.token} />
+        <input type="hidden" name="status" value={formData.status} />
 
         <button
           type="submit"
           disabled={cargando}
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
+          className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 disabled:bg-blue-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          {cargando ? 'Actualizando...' : 'Actualizar Datos'}
+          {cargando ? (
+            <span className="flex items-center justify-center">
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Actualizando...
+            </span>
+          ) : 'Actualizar Datos'}
         </button>
       </form>
     </div>
