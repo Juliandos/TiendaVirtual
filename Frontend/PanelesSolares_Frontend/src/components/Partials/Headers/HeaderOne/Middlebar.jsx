@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 export default function Middlebar({ className, type }) {
+
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
       <div className="container-x mx-auto h-full">
@@ -93,7 +94,7 @@ export default function Middlebar({ className, type }) {
                       type === 3 ? "bg-qh3-blue text-white" : "bg-qyellow"
                     }`}
                   >
-                    15
+                    {JSON.parse(localStorage.getItem('cart')).length}
                   </span>
                 </div>
                 {/* <div className="fixed left-0 top-0 w-full h-full z-40"></div> */}

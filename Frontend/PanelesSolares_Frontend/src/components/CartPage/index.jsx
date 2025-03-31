@@ -6,8 +6,24 @@ import PageTitle from "../Helpers/PageTitle";
 import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
 import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
 
 export default function CardPage({ cart = true }) {
+
+  const [total, setTotal] = useState(0);
+  
+  useEffect(() => {
+    const productos = JSON.parse(localStorage.getItem('cart'));
+    
+    let sum = 0;
+    productos.forEach(producto => {
+      const producto_valor = parseFloat(producto.offer_price.replace(/[^\d.]/g, ''));
+      sum += producto_valor;
+    });
+    setTotal(sum);
+      
+  }, []);
+
   return (
     <Layout childrenClasses={cart ? "pt-0 pb-0" : ""}>
       {cart === false ? (
@@ -67,7 +83,7 @@ export default function CardPage({ cart = true }) {
                       <p className="text-[15px] font-medium text-qblack">
                         Subtotal
                       </p>
-                      <p className="text-[15px] font-medium text-qred">$365</p>
+                      <p className="text-[15px] font-medium text-qred">${total}</p>
                     </div>
                     <div className="w-full h-[1px] bg-[#EDEDED]"></div>
                   </div>

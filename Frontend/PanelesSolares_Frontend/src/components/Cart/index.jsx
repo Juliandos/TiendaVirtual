@@ -1,12 +1,27 @@
 import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
 import { useCart } from "../../components/Contexts/UseCart"
 
 const apiUrl = import.meta.env.VITE_API_URL
 
 export default function Cart({ className, type }) {
+  const [total, setTotal] = useState(0);
 
   const { cartItems, removeFromCart } = useCart();
-  console.log(cartItems);
+
+  useEffect(() => {
+    const productos = JSON.parse(localStorage.getItem('cart'));
+    
+    let sum = 0;
+    productos.forEach(producto => {
+      const producto_valor = parseFloat(producto.offer_price.replace(/[^\d.]/g, ''));
+      sum += producto_valor;
+    });
+    setTotal(sum);
+    console.log(total);
+    
+  }, []);
+
 
   return (
     <>
@@ -21,7 +36,7 @@ export default function Cart({ className, type }) {
             <ul>
               {cartItems.map((product) => (
                   <li className="w-full h-full flex" key={product.id}>
-                  <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
+                    <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
                     <div className="w-[65px] h-full">
                       <img
                         src={`${apiUrl}/imagenes/imagen/${product.image}`}
@@ -64,7 +79,7 @@ export default function Cart({ className, type }) {
           <div className="product-actions px-4 mb-[30px]">
             <div className="total-equation flex justify-between items-center mb-[28px]">
               <span className="text-[15px] font-500 text-qblack">Subtotal</span>
-              <span className="text-[15px] font-500 text-qred ">$365</span>
+              <span className="text-[15px] font-500 text-qred ">${total}</span>
             </div>
             <div className="product-action-btn">
               <a href="#">
