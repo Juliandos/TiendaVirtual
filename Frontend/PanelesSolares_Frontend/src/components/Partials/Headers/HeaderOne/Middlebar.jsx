@@ -4,6 +4,7 @@ import ThinBag from "../../../Helpers/icons/ThinBag";
 import ThinLove from "../../../Helpers/icons/ThinLove";
 import ThinPeople from "../../../Helpers/icons/ThinPeople";
 import SearchBox from "../../../Helpers/SearchBox";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 export default function Middlebar({ className, type }) {
@@ -115,4 +116,9 @@ export default function Middlebar({ className, type }) {
       </div>
     </div>
   );
+}
+
+Middlebar.propTypes = {
+  className: PropTypes.string,
+  type: PropTypes.number
 }
