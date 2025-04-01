@@ -5,14 +5,15 @@ import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
 import PropTypes from "prop-types";
 import { useCart } from '../../Contexts/UseCart.jsx';
+import { useWish } from "../../Contexts/UseWish.jsx";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function ProductCardStyleOne({ datas, type }) {
 
   const { addToCart } = useCart();
+  const { addToWish } = useWish();
 
-  // console.log(datas);
   const available =
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *
@@ -121,7 +122,7 @@ export default function ProductCardStyleOne({ datas, type }) {
             <QuickViewIco />
           </span>
         </a>
-        <a href="#">
+        <a href="#" onClick={() => addToWish(datas)}>
           <span className="w-10 h-10 flex justify-center items-center bg-primarygray rounded">
             <ThinLove />
           </span>

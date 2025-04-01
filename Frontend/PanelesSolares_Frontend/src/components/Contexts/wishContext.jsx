@@ -66,8 +66,8 @@ export function WishProvider({ children }) {
     <WishContext.Provider
       value={{
         wishItems: wishItems,
-        addToCart: addToWish,
-        removeFromCart: removeFromWish,
+        addToWish: addToWish,
+        removeFromWish: removeFromWish,
         updateQuantity,
         cartTotal: wishItems.reduce(
           (total, item) => total + item.price * item.quantity,
