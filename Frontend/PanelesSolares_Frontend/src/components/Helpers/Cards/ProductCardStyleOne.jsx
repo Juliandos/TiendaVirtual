@@ -122,7 +122,7 @@ export default function ProductCardStyleOne({ datas, type }) {
             <QuickViewIco />
           </span>
         </a>
-        <a href="#" onClick={() => addToWish(datas)}>
+        <a onClick={() => addToWish(datas)}>
           <span className="w-10 h-10 flex justify-center items-center bg-primarygray rounded">
             <ThinLove />
           </span>

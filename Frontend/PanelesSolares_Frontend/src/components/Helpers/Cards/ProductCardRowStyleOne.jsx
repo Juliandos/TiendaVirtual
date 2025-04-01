@@ -5,10 +5,12 @@ import Star from "../icons/Star";
 import PropTypes from "prop-types";
 import ThinLove from "../icons/ThinLove";
 import { useCart } from "../../Contexts/UseCart"
+import { useWish } from "../../Contexts/UseWish";
 
 export default function ProductCardRowStyleTwo({ className, datas, type }) {
   
   const { addToCart } = useCart();
+  const { addToWish } = useWish();
 
   return (
     <div
@@ -64,7 +66,7 @@ export default function ProductCardRowStyleTwo({ className, datas, type }) {
             <QuickViewIco />
           </span>
         </a>
-        <a href="#">
+        <a  onClick={() => addToWish(datas)}>
           <span className="w-10 h-10 flex justify-center items-center bg-primarygray rounded">
             <ThinLove />
           </span>
