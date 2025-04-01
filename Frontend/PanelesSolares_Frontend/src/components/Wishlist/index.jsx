@@ -3,6 +3,7 @@ import EmptyWishlistError from "../EmptyWishlistError";
 import PageTitle from "../Helpers/PageTitle";
 import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
+import PropTypes from "prop-types";
 
 export default function Wishlist({ wishlist = true }) {
   return (
@@ -56,3 +57,7 @@ export default function Wishlist({ wishlist = true }) {
     </Layout>
   );
 }
+
+Wishlist.propTypes = {
+  wishlist: PropTypes.bool
+};
