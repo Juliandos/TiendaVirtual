@@ -1,6 +1,6 @@
 // contexts/useCart.js
 import { useContext } from "react";
-import { CartContext as WishContext } from "./wishContext.jsx";
+import { WishContext } from "./wishContext.jsx";
 
 export function useWish() {
   const context = useContext(WishContext);

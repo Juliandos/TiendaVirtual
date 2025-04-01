@@ -18,8 +18,6 @@ export default function Cart({ className, type }) {
       sum += producto_valor;
     });
     setTotal(sum);
-    console.log(total);
-    
   }, []);
 
 
