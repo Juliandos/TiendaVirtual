@@ -15,12 +15,25 @@ export function CartProvider({ children }) {
       return [];
     }
   });
+  const [cartTotal, setCartTotal] = useState(0);
+
+  // Calcular el total cuando cambien los items
+  useEffect(() => {
+    const newTotal = cartItems.reduce((total, item) => {
+      const price = parseFloat(item.offer_price.replace('$', ''));
+      return total + (price * item.quantity);
+    }, 0);
+    setCartTotal(newTotal);
+  }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
-      
     }
   }, []);
   
@@ -67,13 +80,10 @@ export function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cartItems,
+        cartTotal,
         addToCart,
         removeFromCart,
         updateQuantity,
-        cartTotal: cartItems.reduce(
-          (total, item) => total + item.price * item.quantity,
-          0
-        ),
         itemCount: cartItems.reduce((count, item) => count + item.quantity, 0),
       }}
     >

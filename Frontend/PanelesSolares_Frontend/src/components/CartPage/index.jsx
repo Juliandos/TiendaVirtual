@@ -1,28 +1,16 @@
 import { Link } from "react-router-dom";
 import BreadcrumbCom from "../BreadcrumbCom";
 import EmptyCardError from "../EmptyCardError";
-import InputCom from "../Helpers/InputCom";
+// import InputCom from "../Helpers/InputCom";
 import PageTitle from "../Helpers/PageTitle";
+import { useCart } from '../Contexts/UseCart';
 import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
 
 export default function CardPage({ cart = true }) {
 
-  const [total, setTotal] = useState(0);
-  
-  useEffect(() => {
-    const productos = JSON.parse(localStorage.getItem('cart'));
-    
-    let sum = 0;
-    productos.forEach(producto => {
-      const producto_valor = parseFloat(producto.offer_price.replace(/[^\d.]/g, ''));
-      sum += producto_valor;
-    });
-    setTotal(sum);
-      
-  }, []);
+  const { cartTotal } = useCart();
 
   return (
     <Layout childrenClasses={cart ? "pt-0 pb-0" : ""}>
@@ -54,9 +42,9 @@ export default function CardPage({ cart = true }) {
               <ProductsTable className="mb-[30px]" />
               <div className="w-full sm:flex justify-between">
                 <div className="discount-code sm:w-[270px] w-full mb-5 sm:mb-0 h-[50px] flex">
-                  <div className="flex-1 h-full">
+                  {/* <div className="flex-1 h-full">
                     <InputCom type="text" placeholder="Discount Code" />
-                  </div>
+                  </div> */}
                   <button type="button" className="w-[90px] h-[50px] black-btn">
                     <span className="text-sm font-semibold">Apply</span>
                   </button>
@@ -83,7 +71,7 @@ export default function CardPage({ cart = true }) {
                       <p className="text-[15px] font-medium text-qblack">
                         Subtotal
                       </p>
-                      <p className="text-[15px] font-medium text-qred">${total}</p>
+                      <p className="text-[15px] font-medium text-qred">${cartTotal.toFixed(2)}</p>
                     </div>
                     <div className="w-full h-[1px] bg-[#EDEDED]"></div>
                   </div>
@@ -176,13 +164,13 @@ export default function CardPage({ cart = true }) {
                         </svg>
                       </span>
                     </div>
-                    <div className="w-full h-[50px]">
+                    {/* <div className="w-full h-[50px]">
                       <InputCom
                         inputClasses="w-full h-full"
                         type="text"
                         placeholder="Postcode / ZIP"
                       />
-                    </div>
+                    </div> */}
                   </div>
                   <button type="button" className="w-full mb-10">
                     <div className="w-full h-[50px] bg-[#F6F6F6] flex justify-center items-center">
@@ -194,7 +182,7 @@ export default function CardPage({ cart = true }) {
                       <p className="text-[18px] font-medium text-qblack">
                         Total
                       </p>
-                      <p className="text-[18px] font-medium text-qred">$365</p>
+                      <p className="text-[18px] font-medium text-qred">${cartTotal.toFixed(2)}</p>
                     </div>
                   </div>
                   <Link to="/checkout">
