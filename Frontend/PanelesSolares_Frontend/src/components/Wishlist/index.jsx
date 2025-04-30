@@ -5,14 +5,13 @@ import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
 import PropTypes from "prop-types";
 import { useWish } from "../Contexts/UseWish";
-import { useCart } from "../Contexts/UseCart"; // Importa el contexto del carrito
+import { useCart } from "../Contexts/UseCart";
 
 export default function Wishlist({ wishlist = true }) {
   const { wishItems } = useWish();
-  const { addToCart } = useCart(); // Obtén la función addToCart del contexto
+  const { addToCart } = useCart();
 
   const handleAddAllToCart = () => {
-    // Agrega todos los items al carrito
     wishItems.forEach(item => {
       addToCart(item);
     });
