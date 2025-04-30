@@ -4,8 +4,12 @@ import PageTitle from "../Helpers/PageTitle";
 import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
 import PropTypes from "prop-types";
+import { useWish } from "../Contexts/UseWish"
 
 export default function Wishlist({ wishlist = true }) {
+
+  const { wishItems } = useWish();
+
   return (
     <Layout childrenClasses={wishlist ? "pt-0 pb-0" : ""}>
       {wishlist === false ? (

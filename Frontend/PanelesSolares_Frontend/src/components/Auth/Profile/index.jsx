@@ -37,11 +37,12 @@ export default function Profile() {
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/personas/una/${email_persona}`)
     .then(response => {
-      // if (!response.ok) throw new Error("Error en la respuesta");
       return response.json();
     })
     .then(data => {
       setPersona(data);
+      console.log(persona);
+      
     })
     .catch(error => console.error('Error:', error));
   }, []);

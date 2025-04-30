@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import PropTypes from "prop-types";
 import InputQuantityCom from "../../../Helpers/InputQuantityCom";
 
 export default function WishlistTab({ className }) {
@@ -214,4 +215,8 @@ export default function WishlistTab({ className }) {
       </div>
     </>
   );
+}
+
+WishlistTab.propTypes = {
+  className: PropTypes.string,
 }
