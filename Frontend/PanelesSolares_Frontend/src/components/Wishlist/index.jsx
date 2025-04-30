@@ -4,11 +4,19 @@ import PageTitle from "../Helpers/PageTitle";
 import Layout from "../Partials/Layout";
 import ProductsTable from "./ProductsTable";
 import PropTypes from "prop-types";
-import { useWish } from "../Contexts/UseWish"
+import { useWish } from "../Contexts/UseWish";
+import { useCart } from "../Contexts/UseCart"; // Importa el contexto del carrito
 
 export default function Wishlist({ wishlist = true }) {
-
   const { wishItems } = useWish();
+  const { addToCart } = useCart(); // Obtén la función addToCart del contexto
+
+  const handleAddAllToCart = () => {
+    // Agrega todos los items al carrito
+    wishItems.forEach(item => {
+      addToCart(item);
+    });
+  };
 
   return (
     <Layout childrenClasses={wishlist ? "pt-0 pb-0" : ""}>
@@ -46,7 +54,11 @@ export default function Wishlist({ wishlist = true }) {
                     </div>
                   </button>
                   <div className="w-[180px] h-[50px]">
-                    <button type="button" className="yellow-btn">
+                    <button 
+                      type="button" 
+                      className="yellow-btn"
+                      onClick={handleAddAllToCart} // Agrega el evento onClick
+                    >
                       <div className="w-full text-sm font-semibold">
                         Add to Cart All
                       </div>
