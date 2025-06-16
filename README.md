@@ -99,5 +99,5 @@ JWT_SECRET=mi_secreto_jwt
 DATABASE_URL=mysql+mysqlconnector://user:password@localhost/tiendavirtual
 SMTP_USER=correo@ejemplo.com
 SMTP_PASSWORD=email_password
-
 ```
+*Hecho con :heart: por [Julian Ortega](https://github.com/Juliandos).*
