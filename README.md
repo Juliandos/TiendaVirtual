@@ -45,11 +45,11 @@ Plataforma e-commerce completa para paneles solares (adaptable a cualquier produ
 
 |                                  |                                 |
 |----------------------------------|---------------------------------|
-| ![Imagen 1](https://github.com/Juliandos/TiendaVirtual-picoypala/blob/main/Imagenes/2024-07-07_145244.jpg)|![Imagen 6](https://github.com/Juliandos/TiendaVirtual-picoypala/blob/main/Imagenes/2024-07-07_145341.jpg)
+| ![Imagen 1](https://github.com/Juliandos/TiendaVirtual/blob/main/Imagenes/login.png)|![Imagen 2](https://github.com/Juliandos/TiendaVirtual/blob/main/Imagenes/dashboard.png)
 
 |                                  |                                 |
 |----------------------------------|---------------------------------|
-| ![Imagen 2](https://github.com/Juliandos/TiendaVirtual-picoypala/blob/main/Imagenes/2024-07-07_145401.jpg) | ![Imagen 2](https://github.com/Juliandos/TiendaVirtual-picoypala/blob/main/Imagenes/2024-07-07_145418.jpg) |
+| ![Imagen 2](https://github.com/Juliandos/TiendaVirtual/blob/main/Imagenes/Tienda%20Virtual.png) | ![Imagen 2](https://github.com/Juliandos/TiendaVirtual/blob/main/Imagenes/Carrito.png) |
 
 ## Instalación y Configuración
 
